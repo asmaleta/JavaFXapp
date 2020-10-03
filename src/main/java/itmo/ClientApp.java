@@ -1,6 +1,5 @@
 package itmo;
 
-import itmo.gui.LoginRegisterController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +20,7 @@ public class ClientApp  extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(ClientApp.class.getResource("/views/server_connection_menu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ClientApp.class.getResource("/views/menus/server_connection_menu.fxml"));
         ResourceBundle bundle = ResourceBundle.getBundle("languages.Langs", new Locale("ru"));
         fxmlLoader.setResources(bundle);
         Parent root = fxmlLoader.load();

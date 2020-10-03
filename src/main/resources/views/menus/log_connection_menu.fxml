@@ -3,12 +3,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -54,20 +50,6 @@
             </HBox>
          </children>
       </VBox>
-      <StackPane fx:id="langMenuBarPane" layoutX="1171.0" layoutY="674.0" prefHeight="40.0" prefWidth="101.0">
-         <children>
-            <MenuBar>
-               <menus>
-                  <Menu fx:id="menuLang" mnemonicParsing="false" text="Язык">
-                    <items>
-                        <RadioMenuItem fx:id="ru" mnemonicParsing="false" text="\%lmenuBar.lang.russian" />
-                        <RadioMenuItem fx:id="en" mnemonicParsing="false" />
-                        <RadioMenuItem fx:id="nl" mnemonicParsing="false" />
-                        <RadioMenuItem fx:id="se" mnemonicParsing="false" />
-                    </items>
-                  </Menu>
-               </menus>
-            </MenuBar>
-         </children></StackPane>
+      <fx:include source="lang_menu.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>

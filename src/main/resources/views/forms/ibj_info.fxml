@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="683.0" prefWidth="459.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="addFormLabel" alignment="CENTER" prefHeight="46.0" prefWidth="399.0" text="Информация об объекте:" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </Label>
+      <Label fx:id="id" prefHeight="46.0" prefWidth="399.0" text="ID = ..." textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" left="30.0" right="30.0" />
+         </VBox.margin>
+      </Label>
+      <JFXTextField fx:id="name" focusColor="#2b4590" prefHeight="10.0" prefWidth="150.0" promptText="name">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField fx:id="coordidinateX" focusColor="#2b4590" prefHeight="10.0" prefWidth="150.0" promptText="coordidinateX">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField fx:id="coordidinateY" focusColor="#2b4590" prefHeight="10.0" prefWidth="150.0" promptText="coordidinateY">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField fx:id="locationToName" focusColor="#2b4590" prefHeight="10.0" prefWidth="150.0" promptText="locationToName">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField fx:id="locationToX" focusColor="#2b4590" prefHeight="10.0" prefWidth="150.0" promptText="locationToX">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField fx:id="locationTo" focusColor="#2b4590" prefHeight="10.0" prefWidth="150.0" promptText="locationTo">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField fx:id="locationFromName" focusColor="#2b4590" prefHeight="10.0" prefWidth="150.0" promptText="locationFromName">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField fx:id="locationFromX" focusColor="#2b4590" prefHeight="10.0" prefWidth="150.0" promptText="locationFromX">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField fx:id="locationFromY" focusColor="#2b4590" prefHeight="10.0" prefWidth="150.0" promptText="locationFromY">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField fx:id="distance" focusColor="#2b4590" prefHeight="10.0" prefWidth="150.0" promptText="distance">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <FlowPane alignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0">
+         <children>
+            <JFXButton alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="180.0" style="-fx-border-color: black;" text="Изменить" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </JFXButton>
+            <JFXButton alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="180.0" style="-fx-border-color: black;" text="Удалить" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </JFXButton>
+            <JFXButton alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="180.0" style="-fx-border-color: black;" text="Очистить коллекцию" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </JFXButton>
+            <JFXButton alignment="CENTER" prefHeight="57.0" prefWidth="180.0" style="-fx-border-color: black;" text="Добавить в коллекцию" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </JFXButton>
+         </children>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+         </VBox.margin>
+      </FlowPane>
+   </children>
+</VBox>
