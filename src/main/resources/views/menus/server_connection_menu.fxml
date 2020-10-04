@@ -9,7 +9,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="connectionPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itmo.gui.LoginRegisterController">
+<AnchorPane fx:id="connectionPane" prefHeight="720.0" prefWidth="1280.0" styleClass="connectionPane" stylesheets="@../../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itmo.gui.controllers.ServerConnectionController">
+   <!--fx:controller="itmo.gui.controllers.ServerConnectionController">-->
    <children>
       <VBox fx:id="connectionMenuBarPane" layoutX="441.0" layoutY="148.0" prefHeight="326.0" prefWidth="439.0">
          <children>
@@ -21,19 +22,19 @@
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
             </Text>
-            <JFXTextField fx:id="adress" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="150.0" promptText="\\%login.textField.username" text="Адрес">
+            <JFXTextField fx:id="serverAddress" alignment="TOP_LEFT" labelFloat="true" prefHeight="40.0" prefWidth="150.0" promptText="%server.textField.serverAddress" styleClass="textField" stylesheets="@../../styles.css">
                <VBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="60.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField fx:id="port" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="150.0" promptText="\\%login.textField.password" text="Порт">
+            <JFXTextField fx:id="port" alignment="TOP_LEFT" labelFloat="true" prefHeight="40.0" prefWidth="150.0" promptText="%server.textField.port" styleClass="textField" stylesheets="@../../styles.css">
                <VBox.margin>
                   <Insets bottom="40.0" left="20.0" right="20.0" top="40.0" />
                </VBox.margin>
             </JFXTextField>
             <HBox prefHeight="41.0" prefWidth="399.0">
                <children>
-                  <JFXButton fx:id="connect" alignment="CENTER" prefHeight="41.0" prefWidth="430.0" style="-fx-border-color: gray;" text="Подключиться" textAlignment="CENTER">
+                  <JFXButton fx:id="connect" alignment="CENTER" onAction="#serverConnection" prefHeight="41.0" prefWidth="430.0" style="-fx-border-color: gray;" text="Подключиться" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

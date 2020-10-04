@@ -7,14 +7,14 @@
 
 <StackPane fx:id="connectionMenuBarPane" prefHeight="40.0" prefWidth="101.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="136.0">
+      <MenuBar prefHeight="25.0" prefWidth="108.0">
          <menus>
-            <Menu fx:id="menuLang" mnemonicParsing="false" text="Язык">
+            <Menu fx:id="menuLang" mnemonicParsing="false" text="%menubar.lang">
                <items>
-                  <RadioMenuItem fx:id="ru" mnemonicParsing="false" text="\\%menuBar.lang.russian" />
-                  <RadioMenuItem fx:id="en" mnemonicParsing="false" text="\\%menuBar.lang.english" />
-                  <RadioMenuItem fx:id="nl" mnemonicParsing="false" text="\\%menuBar.lang.netherlands" />
-                  <RadioMenuItem fx:id="se" mnemonicParsing="false" text="\\\%menuBar.lang.sweden" />
+                  <RadioMenuItem fx:id="ru" mnemonicParsing="false" text="%menubar.lang.russian" />
+                  <RadioMenuItem fx:id="en" mnemonicParsing="false" text="%menubar.lang.english" />
+                  <RadioMenuItem fx:id="nl" mnemonicParsing="false" text="%menubar.lang.dutch" />
+                  <RadioMenuItem fx:id="se" mnemonicParsing="false" text="%menubar.lang.swedish" />
                </items>
             </Menu>
          </menus>

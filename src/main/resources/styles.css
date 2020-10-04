@@ -1,0 +1,11 @@
+.connectionPane{
+
+}
+#port {
+
+
+}
+
+.error{
+    -fx-border-color: red !important;
+}

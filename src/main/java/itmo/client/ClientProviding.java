@@ -32,10 +32,8 @@ public class ClientProviding {
     private int PORT;
     private String ADDRESS;
     private Driver driver;
-    public ClientProviding() {
-        this.userManager = new UserManager(
-                new BufferedReader(new InputStreamReader(System.in, charset)),
-                new BufferedWriter(new OutputStreamWriter(System.out, charset)), true);
+    public ClientProviding(UserManager userManager) {
+        this.userManager = userManager;
         dataExchangeClient = new DataExchangeClient();
     }
 
@@ -44,7 +42,6 @@ public class ClientProviding {
      */
     public void work() throws IOException {
         try {
-            setSocketAddress();
             this.driver = userManager.readDriver();
             selector = Selector.open();
             clientApp();
@@ -54,9 +51,9 @@ public class ClientProviding {
         }
     }
 
-    private void setSocketAddress() {
-       ADDRESS = userManager.readString("Введите адрес : ", false);
-       PORT = userManager.parseIntInputWithParameters("Введите порт: ",1,65535);
+    public void setSocketAddress(String address,int port) {
+       ADDRESS = address;
+       PORT = port;
        socketAddress = new InetSocketAddress(ADDRESS, PORT);
     }
 
@@ -156,7 +153,12 @@ public class ClientProviding {
         return successSend;
     }
 
-
+    public boolean testConnect() throws IOException {
+        chanell = SocketChannel.open();
+        chanell.configureBlocking(false);
+        chanell.connect(socketAddress);
+        return chanell.isConnectionPending();
+    }
     public void connect() throws IOException {
         chanell = SocketChannel.open();
         chanell.configureBlocking(false);

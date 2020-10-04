@@ -1,4 +1,4 @@
-package itmo.gui;
+package itmo.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -14,7 +14,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginRegisterController {
-    private ResourceBundle bundle;
     public LoginRegisterController() {
     }
 
@@ -59,6 +58,5 @@ public class LoginRegisterController {
 
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
-        this.bundle = resources;
     }
 }

@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class UserManager {
     public static final Logger LOGGER = Logger.getLogger(UserManager.class.getName());
@@ -176,7 +177,14 @@ public class UserManager {
             return false;
         }
     }
-
+    public boolean checkIntInputWithParameters(String input, int min, int max) {
+        if (checkIntInput(input)){
+            if (Integer.parseInt(input) >= min && Integer.parseInt(input) <= max){
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * Метод проверяет строоку на числовое значение
      *
@@ -215,21 +223,22 @@ public class UserManager {
      * Метод парсит int в определенном диапазоне
      */
 
-    public int parseIntInputWithParameters(String message, int min, int max) {
+    public int parseIntInputWithParameters(String input, int min, int max) {
         int res;
         do {
-            res = parseIntInput(message);
+            res = parseIntInput(input);
         } while (Integer.sum(res, -min) < -0.00001 || Integer.sum(res, -max) > 0.00001);
         return res;
     }
     /**
      * Метод парсит строку в Int
+     * @param input
      */
 
-    public Float parseFloatInput(String message) {
+    public Float parseFloatInput(String input) {
         String res;
         do {
-            res = readString(message, false);
+            res = input;
         } while (!checkFloatInput(res));
         return Float.parseFloat(res);
     }
@@ -259,6 +268,14 @@ public class UserManager {
     }
 
 
+
+    public boolean checkString (String message, boolean nullable){
+        message = message.trim();
+        return !message.equals("") && message != null || nullable;
+    }
+    public boolean checkStringRegex (String message, String regex){
+        return Pattern.matches(regex,message);
+    }
     /**
      * Метод проверяет строоку на null
      *
@@ -287,6 +304,7 @@ public class UserManager {
         }
         return result;
     }
+
     public Driver readDriver() {
         boolean flag = true;
         String line = null;
