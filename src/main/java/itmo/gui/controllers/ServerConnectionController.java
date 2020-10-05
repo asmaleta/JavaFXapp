@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import itmo.ClientApp;
@@ -16,12 +17,20 @@ import itmo.utils.UserManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import lombok.Data;
 import org.apache.log4j.Logger;
-
-public class ServerConnectionController implements Initializable {
+@Data
+public class ServerConnectionController implements Initializable, LangSwitcher {
 
     private static ClientUtils clientUtils;
 
@@ -32,16 +41,6 @@ public class ServerConnectionController implements Initializable {
     public static final Logger LOGGER = Logger.getLogger(ServerConnectionController.class.getName());
     @FXML
     private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private AnchorPane connectionPane;
-
-    @FXML
-    private Text title;
-
     @FXML
     private JFXTextField serverAddress;
 
@@ -49,30 +48,38 @@ public class ServerConnectionController implements Initializable {
     private JFXTextField port;
 
     @FXML
-    private JFXButton connect;
+    private AnchorPane connectionPane;
 
-
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
+        loadElements();
+    }
     @FXML
-    private void serverConnection() {
+    public void serverConnection() {
         if (validAddress(serverAddress.getText()) & validPort(port.getText())) {
-            clientUtils.clientProviding().setSocketAddress(serverAddress.getText(),Integer.parseInt(port.getText()));
             try {
+                clientUtils.clientProviding().setSocketAddress(serverAddress.getText(), Integer.parseInt(port.getText()));
                 if (clientUtils.clientProviding().testConnect()) {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/menus/log_connection_menu.fxml"));
-                    //fxmlLoader.setController(new LoginRegisterController(clientUtils));
-                    fxmlLoader.setResources(resources);
-                    Parent root = fxmlLoader.load();
-                    connectionPane.getChildren().setAll(root);
-                }else{
+                    loadLoginRegister();
+                } else {
                     AlertMaker.showErrorMessage("Connection error", "Failed to connect to server");
                 }
             } catch (RuntimeException e) {
                 AlertMaker.showErrorMessage("Connection error", "Incorrect address");
             } catch (IOException e) {
-               AlertMaker.showErrorMessage("Connection error", e.getClass().getName());
+                AlertMaker.showErrorMessage("Connection error", e.getClass().getName());
             }
         }
 
+    }
+
+    private void loadLoginRegister() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/menus/log_connection_menu.fxml"));
+        fxmlLoader.setController(new LoginRegisterController(this));
+        fxmlLoader.setResources(resources);
+        Parent root = fxmlLoader.load();
+        connectionPane.getChildren().setAll(root);
     }
 
     private boolean validAddress(String string) {
@@ -102,14 +109,40 @@ public class ServerConnectionController implements Initializable {
         }
 
     }
+    private void loadElements() {
+        try {
+            ServerMenuController serverMenuController = new ServerMenuController(this);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/menus/server_connection_menu.fxml"));
+            loader.setController(serverMenuController);
+            loader.setResources(ResourceBundle.getBundle("languages.Langs", resources.getLocale()));
+            Parent ro = loader.load();
+            serverAddress = serverMenuController.getServerAddress();
+            port = serverMenuController.getPort();
+            AnchorPane.setTopAnchor(ro,connectionPane.getPrefHeight()/4);
+            AnchorPane.setRightAnchor(ro,connectionPane.getPrefWidth()/3.3);
+            connectionPane.getChildren().setAll(ro);
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        this.resources = resources;
-        loadElements();
+
+
+            LangController langController = new LangController(this);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/menus/lang_menu.fxml"));
+            fxmlLoader.setController(langController);
+            fxmlLoader.setResources(ResourceBundle.getBundle("languages.Langs", resources.getLocale()));
+            Parent root = fxmlLoader.load();
+            AnchorPane.setBottomAnchor(root,0d);
+            AnchorPane.setRightAnchor(root,0d);
+            connectionPane.getChildren().addAll(root);
+
+
+        } catch (IOException e) {
+            AlertMaker.showErrorMessage("Load fxml error", null);
+        }
     }
 
-    private void loadElements() {
-
+    @Override
+    public void switchLanguage(String id) {
+       Locale locale = Locale.forLanguageTag(id);
+       resources = ResourceBundle.getBundle("languages.Langs", locale);
+       loadElements();
     }
 }

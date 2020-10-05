@@ -1,7 +1,6 @@
 package itmo;
 
 import itmo.client.ClientProviding;
-import itmo.gui.AlertMaker;
 import itmo.gui.controllers.ServerConnectionController;
 import itmo.utils.ClientUtils;
 import itmo.utils.UserManager;
@@ -48,8 +47,8 @@ public class ClientApp  extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/menus/server_connection_menu.fxml"));
-        //fxmlLoader.setController(new ServerConnectionController(clientUtils));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/panes/start_pane.fxml"));
+        fxmlLoader.setController(new ServerConnectionController());
         ResourceBundle bundle = ResourceBundle.getBundle("languages.Langs", new Locale("ru"));
         fxmlLoader.setResources(bundle);
         Parent root = fxmlLoader.load();

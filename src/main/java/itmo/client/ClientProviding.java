@@ -157,7 +157,8 @@ public class ClientProviding {
         chanell = SocketChannel.open();
         chanell.configureBlocking(false);
         chanell.connect(socketAddress);
-        return chanell.isConnectionPending();
+        chanell.finishConnect();
+        return chanell.isConnectionPending() || chanell.isConnected();
     }
     public void connect() throws IOException {
         chanell = SocketChannel.open();
