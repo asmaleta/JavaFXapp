@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="loginMenuBarPane" prefHeight="326.0" prefWidth="439.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="loginMenuBarPane" maxHeight="326.0" maxWidth="439.0" minHeight="326.0" minWidth="439.0" prefHeight="326.0" prefWidth="439.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text fx:id="title" pickOnBounds="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Приветствую на допсе" textAlignment="CENTER" wrappingWidth="398.13672065734863">
          <font>
@@ -18,24 +19,24 @@
             <Insets left="20.0" right="20.0" />
          </VBox.margin>
       </Text>
-      <JFXTextField fx:id="username" alignment="TOP_LEFT" labelFloat="true" prefHeight="40.0" prefWidth="150.0" promptText="" text="root">
+      <JFXTextField fx:id="username" alignment="TOP_LEFT" labelFloat="true" prefHeight="40.0" prefWidth="150.0" promptText="%login.textField.username" styleClass="textField" stylesheets="@../../styles.css" text="root">
          <VBox.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="60.0" />
          </VBox.margin>
       </JFXTextField>
-      <JFXTextField fx:id="password" accessibleRole="PASSWORD_FIELD" alignment="TOP_LEFT" labelFloat="true" prefHeight="40.0" prefWidth="150.0" promptText="" text="root">
+      <JFXPasswordField fx:id="password" labelFloat="true" prefHeight="40.0" prefWidth="150.0" promptText="%login.textField.password" styleClass="textField" stylesheets="@../../styles.css" text="root">
          <VBox.margin>
             <Insets bottom="40.0" left="20.0" right="20.0" top="40.0" />
          </VBox.margin>
-      </JFXTextField>
+      </JFXPasswordField>
       <HBox prefHeight="41.0" prefWidth="399.0">
          <children>
-            <JFXButton fx:id="login" prefHeight="70.0" prefWidth="150.0" style="-fx-border-color: gray;" text="Войти">
+            <JFXButton fx:id="login" onAction="#validLoginTextField" prefHeight="70.0" prefWidth="150.0" style="-fx-border-color: gray;" text="Войти">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </JFXButton>
-            <JFXButton fx:id="register" alignment="CENTER" prefHeight="41.0" prefWidth="161.0" style="-fx-border-color: gray;" text="Зарегестрироваться" textAlignment="CENTER">
+            <JFXButton fx:id="register" alignment="CENTER" onAction="#validRegisterTextField" prefHeight="41.0" prefWidth="161.0" style="-fx-border-color: gray;" text="Зарегестрироваться" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="150.0" />
                </HBox.margin>

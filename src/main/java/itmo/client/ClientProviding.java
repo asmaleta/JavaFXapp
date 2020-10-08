@@ -31,24 +31,9 @@ public class ClientProviding {
     private Selector selector;
     private int PORT;
     private String ADDRESS;
-    private Driver driver;
     public ClientProviding(UserManager userManager) {
         this.userManager = userManager;
         dataExchangeClient = new DataExchangeClient();
-    }
-
-    /**
-     * Устанавливает активное соединение с сервером.
-     */
-    public void work() throws IOException {
-        try {
-            this.driver = userManager.readDriver();
-            selector = Selector.open();
-            clientApp();
-            selector.close();
-        }catch (NoSuchElementException e) {
-            LOGGER.log(Level.INFO, "Завершение программы");
-        }
     }
 
     public void setSocketAddress(String address,int port) {
@@ -58,38 +43,12 @@ public class ClientProviding {
     }
 
     public void clientApp() {
-        boolean connect = false;
-        boolean wassend = true;
-        Package apackage = null;
-        String[] request;
-        while (true) {
-            try {
-                if (wassend) {
-                    request = userManager.readRequest();
-                    if (request[0].equals("exit")) {
-                        break;
-                    } else {
-                        apackage = userManager.createPackage(request,driver);
-                        connect = true;
-                        wassend = false;
+            /*try {
 
-                    }
-
-                }
-            } catch (NoCorrectInputException e) {
-                LOGGER.log(Level.ERROR, e.getMessage());
-            }
-            try {
-                if (connect) {
-                    wassend = dataExchangeWithServer(connect, apackage);
-                }
             } catch (ConnectException e) {
-                wassend = reconnecting();
+
             } catch (EOFException e) {
                 LOGGER.log(Level.ERROR, "Ошибка при чтении потока");
-            } catch (ClassNotFoundException | ClassCastException e) {
-                LOGGER.log(Level.ERROR, "Ошибка при создании класса");
-                e.printStackTrace();
             } catch (NoRouteToHostException e) {
                 LOGGER.log(Level.ERROR, "Неверный адрес");
                 ADDRESS = userManager.readString("Соберись и введи норм адрес : ", false);
@@ -102,8 +61,7 @@ public class ClientProviding {
                 LOGGER.log(Level.ERROR, "Потоковая ошиб очка");
             } catch (NoSuchElementException e) {
                 LOGGER.log(Level.ERROR, "Ошибка при чтении ввода");
-            }
-        }
+            }*/
     }
 
     public boolean reconnecting() {
@@ -120,10 +78,12 @@ public class ClientProviding {
         return false;
     }
 
-    public boolean dataExchangeWithServer(boolean connect, Package aPackage) throws IOException, EOFException, ClassNotFoundException {
+    public Package dataExchangeWithServer(Package aPackage) throws IOException, ClassNotFoundException {
         connect();
         LOGGER.log(Level.INFO, "Подключение к серверу");
         boolean successSend = false;
+        boolean connect = true;
+        Package ans = new Package("Данные не были получены");
         while (connect) {
             selector.selectNow();
             Iterator selectedKeys = this.selector.selectedKeys().iterator();
@@ -138,7 +98,8 @@ public class ClientProviding {
                     chanell.finishConnect();
                     key.interestOps(SelectionKey.OP_WRITE);
                 } else if (key.isReadable()) {
-                    userManager.writeAnsFromServer(dataExchangeClient.packageGet());
+                    ans = dataExchangeClient.packageGet();
+                    userManager.writeAnsFromServer(ans);
                     connect = false;
                     break;
                 } else if (key.isWritable()) {
@@ -150,9 +111,8 @@ public class ClientProviding {
             }
         }
         close();
-        return successSend;
+        return ans;
     }
-
     public boolean testConnect() throws IOException {
         chanell = SocketChannel.open();
         chanell.configureBlocking(false);
@@ -161,11 +121,12 @@ public class ClientProviding {
         return chanell.isConnectionPending() || chanell.isConnected();
     }
     public void connect() throws IOException {
+        selector = Selector.open();
         chanell = SocketChannel.open();
         chanell.configureBlocking(false);
         chanell.connect(socketAddress);
         dataExchangeClient.connect(chanell);
-        chanell.register(selector, SelectionKey.OP_WRITE);
+        chanell.register(selector, SelectionKey.OP_CONNECT);
     }
 
     public void close() throws IOException {

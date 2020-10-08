@@ -20,6 +20,8 @@ public class UserManager {
     private Scanner scanner;
     private boolean manualInput;
 
+
+    private Driver driver;
     public UserManager(Reader reader, Writer writer, boolean manualInput) {
         registerCommands();
         this.reader = reader;
@@ -46,6 +48,9 @@ public class UserManager {
         map.add("exit");
         map.add("registration");
         map.add("remove_driver");
+    }
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
     public boolean isManualInput() {

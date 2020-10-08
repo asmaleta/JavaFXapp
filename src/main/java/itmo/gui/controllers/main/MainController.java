@@ -1,6 +1,7 @@
-package itmo.gui.controllers;
+package itmo.gui.controllers.main;
 
 import itmo.ClientApp;
+import itmo.gui.controllers.lang.LangController;
 import itmo.utils.ClientUtils;
 import javafx.fxml.Initializable;
 
@@ -10,25 +11,27 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-    private static ClientUtils clientUtils;
-    private ResourceBundle resourceBundle;
-
-    public MainController() {
-        this.clientUtils = ClientApp.getClientUtils();
+    private ClientUtils clientUtils;
+    private ResourceBundle resources;
+    private AppPanelController appPanelController;
+    private LangController langController;
+    public MainController(ClientUtils clientUtils) {
+        this.clientUtils = clientUtils;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.resourceBundle = resources;
+        this.resources = resources;
         loadElements();
     }
 
     private void loadElements() {
+
     }
 
     public void changeLanguage(String languageCode) {
         Locale locale = Locale.forLanguageTag(languageCode);
-        resourceBundle = ResourceBundle.getBundle("bundles.LangBundle", locale);
+        resources = ResourceBundle.getBundle("bundles.LangBundle", locale);
         loadElements();
     }
 }

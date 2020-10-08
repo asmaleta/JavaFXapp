@@ -1,27 +1,24 @@
-package itmo.gui.controllers;
+package itmo.gui.controllers.server;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import itmo.ClientApp;
-import itmo.gui.AlertMaker;
+import itmo.gui.controllers.server.ServerConnectionController;
 import itmo.utils.ClientUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.*;
-import javafx.scene.Parent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import lombok.Data;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 @Data
 public class ServerMenuController implements Initializable {
-    private static ClientUtils clientUtils;
+    private ClientUtils clientUtils;
 
     private ServerConnectionController serverConnectionController;
     public ServerMenuController(ServerConnectionController serverConnectionController) {
-        this.clientUtils = ClientApp.getClientUtils();
+        this.clientUtils = serverConnectionController.getClientUtils();
         this.serverConnectionController = serverConnectionController;
     }
 

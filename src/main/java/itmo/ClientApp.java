@@ -1,7 +1,7 @@
 package itmo;
 
 import itmo.client.ClientProviding;
-import itmo.gui.controllers.ServerConnectionController;
+import itmo.gui.controllers.server.ServerConnectionController;
 import itmo.utils.ClientUtils;
 import itmo.utils.UserManager;
 import javafx.application.Application;
@@ -16,22 +16,23 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class ClientApp  extends Application {
     public static final Logger LOGGER = Logger.getLogger(ClientApp.class.getName());
 
-    public static ClientUtils getClientUtils() {
-        return clientUtils;
-    }
-
     private static ClientUtils clientUtils;
     public static void main(String[] args) {
+
+        launch();
+    }
+    @Override
+    public void start(Stage primaryStage) throws Exception {
         UserManager userManager = new UserManager(
                 new BufferedReader(new InputStreamReader(System.in)),
                 new BufferedWriter(new OutputStreamWriter(System.out)), true);
         ClientProviding clientProviding = new ClientProviding(userManager);
-        clientUtils = new ClientUtils() {
+        this.clientUtils = new ClientUtils() {
+
             @Override
             public UserManager userManager() {
                 return userManager ;
@@ -42,17 +43,12 @@ public class ClientApp  extends Application {
                 return clientProviding;
             }
         };
-        launch();
-    }
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
+        Locale.setDefault(Locale.forLanguageTag("ru"));
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/panes/start_pane.fxml"));
-        fxmlLoader.setController(new ServerConnectionController());
-        ResourceBundle bundle = ResourceBundle.getBundle("languages.Langs", new Locale("ru"));
-        fxmlLoader.setResources(bundle);
+        fxmlLoader.setController(new ServerConnectionController(clientUtils));
         Parent root = fxmlLoader.load();
         primaryStage.setScene(new Scene(root));
+        primaryStage.setTitle("Road to deduction");
         primaryStage.show();
     }
 }
