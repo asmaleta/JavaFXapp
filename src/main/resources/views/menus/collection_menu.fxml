@@ -24,7 +24,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <fx:include source="../forms/ibj_info.fxml" AnchorPane.bottomAnchor="52.0" AnchorPane.rightAnchor="0.0" />
+      <fx:include source="../panels/route_info_panel.fxml" AnchorPane.bottomAnchor="52.0" AnchorPane.rightAnchor="0.0" />
       <fx:include source="../panels/app_panel.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="2.0" />
       <fx:include source="lang_menu.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>

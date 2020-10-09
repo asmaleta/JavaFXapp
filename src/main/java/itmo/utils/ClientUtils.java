@@ -6,4 +6,5 @@ public interface ClientUtils {
     String resourceBundlePath = "languages.Langs";
     UserManager userManager();
     ClientProviding  clientProviding();
+    ClientCollectionManager clientCollectionManager();
 }

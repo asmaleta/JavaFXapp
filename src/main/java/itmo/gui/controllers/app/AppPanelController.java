@@ -1,16 +1,17 @@
-package itmo.gui.controllers.main;
+package itmo.gui.controllers.app;
 
 import com.jfoenix.controls.JFXButton;
+import itmo.gui.controllers.app.lisroutes.TableRoutesController;
+import itmo.gui.controllers.app.main.MainController;
+import itmo.gui.controllers.app.visualization.VisualizationController;
 import itmo.gui.controllers.lang.LangSwitcher;
-import itmo.utils.ClientUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
+import lombok.Data;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
+@Data
 public class AppPanelController implements Initializable, LangSwitcher {
 
 
@@ -28,18 +29,30 @@ public class AppPanelController implements Initializable, LangSwitcher {
 
     @FXML
     private JFXButton visualization;
-    @FXML
-    private HBox appPanel;
+
+    private MainController mainController;
+    private TableRoutesController tableRoutesController;
+    private VisualizationController visualizationController;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
-        main.setDisable(true);
     }
 
     private void loadAppPanel() {
 
     }
-
+    @FXML
+    private void loadMain() {
+        appPane.loadMain();
+    }
+    @FXML
+    private void loadListObj() {
+        appPane.loadListObj();
+    }
+    @FXML
+    private void loadVisualization() {
+        appPane.loadVisualization();
+    }
     @Override
     public void switchLanguage() {
 

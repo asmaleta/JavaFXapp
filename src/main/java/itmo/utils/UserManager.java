@@ -22,6 +22,7 @@ public class UserManager {
 
 
     private Driver driver;
+
     public UserManager(Reader reader, Writer writer, boolean manualInput) {
         registerCommands();
         this.reader = reader;
@@ -43,12 +44,13 @@ public class UserManager {
         map.add("remove_greater");
         map.add("remove_lower");
         map.add("sum_of_distance");
-        map.add("show");
+        map.add("get_collection");
         map.add("update_id");
         map.add("exit");
         map.add("registration");
         map.add("remove_driver");
     }
+
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
@@ -92,6 +94,7 @@ public class UserManager {
     public void writeAnsFromServer(Package pack) {
         System.out.println(pack.getAns());
     }
+
     /**
      * Метод возрващающий есть ли что считывать из входного потока.
      *
@@ -113,7 +116,7 @@ public class UserManager {
         return new Route(name, coordinates, from, to, distance);
     }
 
-    public String[] inputProcessing(String line) throws NoCorrectInputException{
+    public String[] inputProcessing(String line) throws NoCorrectInputException {
         return line.trim().indexOf(" ") == -1 ? new String[]{line.trim(), ""} : line.trim().split(" ");
     }
 
@@ -124,7 +127,7 @@ public class UserManager {
         return new Location(x, y, name);
     }
 
-    public Location readLocationFrom() throws NoCorrectInputException{
+    public Location readLocationFrom() throws NoCorrectInputException {
         String name = readString("Введите название места прибытия: ", true);
         Long x = parseLongInput("Введите координату места прибытия x (Long): ");
         Long y = parseLongInput("Введите координату места прибытия y (Long): ");
@@ -132,7 +135,7 @@ public class UserManager {
     }
 
 
-    public Coordinates readCoordinates() throws NoCorrectInputException{
+    public Coordinates readCoordinates() throws NoCorrectInputException {
         Long x = parseLongInput("Введите текущую координату местанахождения x (Long): ");
         Integer y = parseIntInput("Введите текущую координату местанахождения y (int): ");
         return new Coordinates(x, y);
@@ -148,14 +151,14 @@ public class UserManager {
     public boolean checkFloatInput(String input) throws NoCorrectInputException {
         try {
             if (input == null) {
-                if(!manualInput) throw new NoCorrectInputException(input + " - это вам не null");
+                if (!manualInput) throw new NoCorrectInputException(input + " - это вам не null");
                 writeln(input + " - это вам не null");
                 return false;
             }
             Float.parseFloat(input);
             return true;
         } catch (NumberFormatException e) {
-            if(!manualInput) throw new NoCorrectInputException(input + " - это вам не Float");
+            if (!manualInput) throw new NoCorrectInputException(input + " - это вам не Float");
             writeln(input + " - это вам не Float");
             return false;
         }
@@ -170,26 +173,28 @@ public class UserManager {
     public boolean checkIntInput(String input) throws NoCorrectInputException {
         try {
             if (input == null) {
-                if(!manualInput) throw new NoCorrectInputException(input + " - это вам не null");
+                if (!manualInput) throw new NoCorrectInputException(input + " - это вам не null");
                 writeln(input + " - это вам не null");
                 return false;
             }
             Integer.parseInt(input);
             return true;
         } catch (NumberFormatException e) {
-            if(!manualInput) throw new NoCorrectInputException(input + " - это вам не Integer");
+            if (!manualInput) throw new NoCorrectInputException(input + " - это вам не Integer");
             writeln(input + " - это вам не Integer");
             return false;
         }
     }
+
     public boolean checkIntInputWithParameters(String input, int min, int max) {
-        if (checkIntInput(input)){
-            if (Integer.parseInt(input) >= min && Integer.parseInt(input) <= max){
+        if (checkIntInput(input)) {
+            if (Integer.parseInt(input) >= min && Integer.parseInt(input) <= max) {
                 return true;
             }
         }
         return false;
     }
+
     /**
      * Метод проверяет строоку на числовое значение
      *
@@ -199,14 +204,14 @@ public class UserManager {
     public boolean checkLongInput(String input) throws NoCorrectInputException {
         try {
             if (input == null) {
-                if(!manualInput) throw new NoCorrectInputException(input + " - это вам не null");
+                if (!manualInput) throw new NoCorrectInputException(input + " - это вам не null");
                 writeln(input + " - это вам не null");
                 return false;
             }
             Long.parseLong(input);
             return true;
         } catch (NumberFormatException e) {
-            if(!manualInput) throw new NoCorrectInputException(input + " - это вам не Long");
+            if (!manualInput) throw new NoCorrectInputException(input + " - это вам не Long");
             writeln(input + " - это вам не Long");
             return false;
         }
@@ -228,15 +233,17 @@ public class UserManager {
      * Метод парсит int в определенном диапазоне
      */
 
-    public int parseIntInputWithParameters(String input, int min, int max) {
-        int res;
+    public Integer parseIntInputWithParameters(String input, int min, int max) {
+        Integer res;
         do {
             res = parseIntInput(input);
         } while (Integer.sum(res, -min) < -0.00001 || Integer.sum(res, -max) > 0.00001);
         return res;
     }
+
     /**
      * Метод парсит строку в Int
+     *
      * @param input
      */
 
@@ -252,7 +259,7 @@ public class UserManager {
      * Метод парсит строку в Int
      */
 
-    public Integer parseIntInput(String message){
+    public Integer parseIntInput(String message) {
         String res;
         do {
             res = readString(message, false);
@@ -264,7 +271,7 @@ public class UserManager {
      * Метод проверяет строоку на Long
      */
 
-    public Long parseLongInput(String message){
+    public Long parseLongInput(String message) {
         String res;
         do {
             res = readString(message, false);
@@ -273,14 +280,15 @@ public class UserManager {
     }
 
 
-
-    public boolean checkString (String message, boolean nullable){
+    public boolean checkString(String message, boolean nullable) {
         message = message.trim();
         return !message.equals("") && message != null || nullable;
     }
-    public boolean checkStringRegex (String message, String regex){
-        return Pattern.matches(regex,message);
+
+    public boolean checkStringRegex(String message, String regex) {
+        return Pattern.matches(regex, message);
     }
+
     /**
      * Метод проверяет строоку на null
      *
@@ -296,7 +304,7 @@ public class UserManager {
             }
             if (!manualInput && !hasNextLine()) {
                 scriptModeOff();
-                LOGGER.log(Level.ERROR,"Недостаточно введенных данных");
+                LOGGER.log(Level.ERROR, "Недостаточно введенных данных");
             }
             if (manualInput) {
                 write(message);
@@ -305,7 +313,7 @@ public class UserManager {
             result = result.isEmpty() ? null : result;
         } while (manualInput && !nullable && result == null);
         if (!manualInput && result == null) {
-            LOGGER.log(Level.ERROR,"Это поле не может быть null");
+            LOGGER.log(Level.ERROR, "Это поле не может быть null");
         }
         return result;
     }
@@ -317,7 +325,7 @@ public class UserManager {
         while (flag) {
             write("Введите логин: ");
             line = read();
-            line  = line.replaceAll("\\s+", "");
+            line = line.replaceAll("\\s+", "");
             if (line == null || line.equals("")) {
                 writeln("Введие не пустую строку");
             } else {
@@ -339,6 +347,7 @@ public class UserManager {
         }
         return driver;
     }
+
     public String[] readRequest() {
         boolean flag = true;
         String line;
@@ -356,7 +365,7 @@ public class UserManager {
             } else {
                 inputProcessing = inputProcessing(line);
                 if (haveCommand(inputProcessing[0]) && chekArg(inputProcessing)) {
-                    if (!manualInput){
+                    if (!manualInput) {
                         writeln("Считана команда : " + inputProcessing[0]);
                     }
                     if (inputProcessing[0].equals("execute_script")) {
@@ -369,7 +378,8 @@ public class UserManager {
         }
         return inputProcessing;
     }
-//execute_script clientMod/script.txt
+
+    //execute_script clientMod/script.txt
     public void scriptModeOff() {
         setScanner(new Scanner(new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))));
         manualInput = true;
@@ -401,31 +411,31 @@ public class UserManager {
         if (map.contains(line)) {
             return true;
         } else {
-            LOGGER.log(Level.INFO,"Неверное имя команды : " + line);
+            LOGGER.log(Level.INFO, "Неверное имя команды : " + line);
             return false;
         }
     }
 
-    public Package createPackage(String[] line, Driver driver) throws NoCorrectInputException {
-            switch (line[0]) {
-                case "filter_less_than_distance":
-                    return new Package(line[0], Float.parseFloat(line[1]),driver);
-                case "remove_by_id":
-                    return new Package(line[0], Integer.parseInt(line[1]),driver );
-                case "update_id":
-                    return new Package(line[0], Integer.parseInt(line[1]), readRoute(),driver);
-                case "add":
-                    return new Package(line[0], null, readRoute(), driver );
-                case "remove_greater":
-                    return new Package(line[0], null, readRoute(), driver);
-                case "remove_lower":
-                    return new Package(line[0], null, readRoute(), driver);
-                default:
-                    return new Package(line[0], null,driver );
-            }
+    public Package createPackage(String command, String arg, Route route) throws NoCorrectInputException {
+        switch (command) {
+            case "filter_less_than_distance":
+                return new Package(command, Float.parseFloat(arg), driver);
+            case "remove_by_id":
+                return new Package(command, Integer.parseInt(arg), driver);
+            case "update_id":
+                return new Package(command, Integer.parseInt(arg), readRoute(), driver);
+            case "add":
+                return new Package(command, null, route, driver);
+            case "remove_greater":
+                return new Package(command, null, route, driver);
+            case "remove_lower":
+                return new Package(command, null, route, driver);
+            default:
+                return new Package(command, null, driver);
+        }
     }
 
-    public boolean chekArg(String [] line){
+    public boolean chekArg(String[] line) {
         switch (line[0]) {
             case "filter_less_than_distance":
                 return checkFloatInput(line[1]);

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="658.0" maxWidth="350.0" minHeight="658.0" minWidth="350.0" prefHeight="658.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="addFormLabel" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="5.0" maxWidth="350.0" prefHeight="21.0" prefWidth="300.0" text="%infoForm.textField.addFormLabel" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </Label>
+      <JFXTextField id="id" fx:id="id" editable="false" focusColor="#2b4590" labelFloat="true" maxWidth="350.0" prefHeight="39.0" prefWidth="300.0" promptText="%infoForm.textField.Id">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField id="name" fx:id="name" focusColor="#2b4590" labelFloat="true" maxWidth="350.0" prefHeight="39.0" prefWidth="300.0" promptText="%infoForm.textField.name">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="10.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField id="coordidinateX" fx:id="coordidinateX" focusColor="#2b4590" labelFloat="true" maxWidth="350.0" prefHeight="10.0" prefWidth="300.0" promptText="%infoForm.textField.coordidinateX">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="10.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField id="coordidinateY" fx:id="coordidinateY" focusColor="#2b4590" labelFloat="true" maxWidth="350.0" prefHeight="10.0" prefWidth="300.0" promptText="%infoForm.textField.coordidinateY">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="10.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField id="locationFromName" fx:id="locationFromName" focusColor="#2b4590" labelFloat="true" maxWidth="350.0" prefHeight="10.0" prefWidth="300.0" promptText="%infoForm.textField.locationFromName">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="10.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField id="locationFromX" fx:id="locationFromX" focusColor="#2b4590" labelFloat="true" maxWidth="350.0" prefHeight="10.0" prefWidth="300.0" promptText="%infoForm.textField.locationFromX">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="10.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField id="locationFromY" fx:id="locationFromY" focusColor="#2b4590" labelFloat="true" maxWidth="350.0" prefHeight="10.0" prefWidth="300.0" promptText="%infoForm.textField.locationFromY">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="10.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField id="locationToName" fx:id="locationToName" focusColor="#2b4590" labelFloat="true" maxWidth="350.0" prefHeight="10.0" prefWidth="300.0" promptText="%infoForm.textField.locationToName">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="10.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField id="locationToX" fx:id="locationToX" focusColor="#2b4590" labelFloat="true" maxWidth="350.0" prefHeight="10.0" prefWidth="300.0" promptText="%infoForm.textField.locationToX">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="10.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField id="locationToY" fx:id="locationToY" focusColor="#2b4590" labelFloat="true" maxWidth="350.0" prefHeight="10.0" prefWidth="300.0" promptText="%infoForm.textField.locationToY">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="10.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField id="distance" fx:id="distance" focusColor="#2b4590" labelFloat="true" maxWidth="350.0" prefHeight="10.0" prefWidth="300.0" promptText="%infoForm.textField.distance">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="10.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <JFXTextField id="date" fx:id="date" editable="false" focusColor="#2b4590" labelFloat="true" maxWidth="350.0" prefHeight="10.0" prefWidth="300.0" promptText="%infoForm.textField.date">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="10.0" />
+         </VBox.margin>
+      </JFXTextField>
+      <FlowPane alignment="CENTER" hgap="5.0" maxWidth="350.0" prefHeight="118.0" prefWidth="290.0" vgap="5.0">
+         <children>
+            <JFXButton fx:id="change" alignment="CENTER" contentDisplay="CENTER" maxWidth="130.0" onAction="#buttonChangeCommand" prefHeight="34.0" prefWidth="180.0" style="-fx-border-color: black;" text="%infoForm.button.change" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="remove" alignment="CENTER" contentDisplay="CENTER" maxWidth="130.0" onAction="#buttonRemoveCommand" prefHeight="34.0" prefWidth="180.0" style="-fx-border-color: black;" text="%infoForm.button.remove" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="clear" alignment="CENTER" contentDisplay="CENTER" maxWidth="130.0" onAction="#buttonClearCommand" prefHeight="50.0" prefWidth="180.0" style="-fx-border-color: black;" text="%infoForm.button.clear" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Arial Bold" size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="add" alignment="CENTER" maxWidth="130.0" onAction="#buttonAddCommand" prefHeight="50.0" prefWidth="180.0" style="-fx-border-color: black;" text="%infoForm.button.add" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Arial Bold" size="15.0" />
+               </font>
+            </JFXButton>
+         </children>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+         </VBox.margin>
+      </FlowPane>
+   </children>
+</VBox>

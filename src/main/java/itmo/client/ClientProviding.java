@@ -1,8 +1,7 @@
 package itmo.client;
 
-import itmo.exceptions.NoCorrectInputException;
+import itmo.gui.AlertMaker;
 import itmo.utils.UserManager;
-import lab6common.data.Driver;
 import lab6common.data.Package;
 
 import java.io.*;
@@ -11,13 +10,12 @@ import java.net.*;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.nio.channels.UnresolvedAddressException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 
+import lab6common.generatedclasses.Route;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -78,40 +76,47 @@ public class ClientProviding {
         return false;
     }
 
-    public Package dataExchangeWithServer(Package aPackage) throws IOException, ClassNotFoundException {
-        connect();
-        LOGGER.log(Level.INFO, "Подключение к серверу");
-        boolean successSend = false;
-        boolean connect = true;
-        Package ans = new Package("Данные не были получены");
-        while (connect) {
-            selector.selectNow();
-            Iterator selectedKeys = this.selector.selectedKeys().iterator();
-            while (selectedKeys.hasNext()) {
-                SelectionKey key = (SelectionKey) selectedKeys.next();
-                selectedKeys.remove();
-                if (!key.isValid()) {
-                    connect = false;
-                    break;
-                }
-                if (key.isConnectable()) {
-                    chanell.finishConnect();
-                    key.interestOps(SelectionKey.OP_WRITE);
-                } else if (key.isReadable()) {
-                    ans = dataExchangeClient.packageGet();
-                    userManager.writeAnsFromServer(ans);
-                    connect = false;
-                    break;
-                } else if (key.isWritable()) {
-                    chanell.finishConnect();
-                    dataExchangeClient.packageSend(aPackage);
-                    key.interestOps(SelectionKey.OP_READ);
-                    successSend = true;
+    public Package dataExchangeWithServer(String command, String arg, Route route) {
+        Package ans = new Package("Не был получен ответ");
+        try {
+            connect();
+            LOGGER.log(Level.INFO, "Подключение к серверу");
+            boolean connect = true;
+            while (connect) {
+                selector.selectNow();
+                Iterator selectedKeys = this.selector.selectedKeys().iterator();
+                while (selectedKeys.hasNext()) {
+                    SelectionKey key = (SelectionKey) selectedKeys.next();
+                    selectedKeys.remove();
+                    if (!key.isValid()) {
+                        connect = false;
+                        break;
+                    }
+                    if (key.isConnectable()) {
+                        chanell.finishConnect();
+                        key.interestOps(SelectionKey.OP_WRITE);
+                    } else if (key.isReadable()) {
+                        ans = dataExchangeClient.packageGet();
+                        userManager.writeAnsFromServer(ans);
+                        connect = false;
+                        break;
+                    } else if (key.isWritable()) {
+                        chanell.finishConnect();
+                        dataExchangeClient.packageSend(userManager.createPackage(command, arg,route));
+                        key.interestOps(SelectionKey.OP_READ);
+                    }
                 }
             }
+            close();
+        }catch (ClassCastException e){
+            AlertMaker.showErrorMessage("Ошибка создания пакета", null);
+        }catch (IOException e){
+            e.printStackTrace();
+            AlertMaker.showErrorMessage("I/0 Exception", null);
+        }finally {
+            return ans;
         }
-        close();
-        return ans;
+
     }
     public boolean testConnect() throws IOException {
         chanell = SocketChannel.open();

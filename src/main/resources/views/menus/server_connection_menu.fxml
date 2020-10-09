@@ -19,12 +19,12 @@
             <Insets left="20.0" right="20.0" />
          </VBox.margin>
       </Text>
-      <JFXTextField fx:id="serverAddress" alignment="TOP_LEFT" labelFloat="true" prefHeight="40.0" prefWidth="150.0" promptText="%server.textField.serverAddress" styleClass="textField" stylesheets="@../../styles.css" text="127.0.0.1">
+      <JFXTextField fx:id="serverAddress" alignment="TOP_LEFT" labelFloat="true" prefHeight="40.0" prefWidth="150.0" promptText="%server.textField.serverAddress" styleClass="text-field-button" stylesheets="@../../styles.css" text="127.0.0.1" unFocusColor="BLACK">
          <VBox.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="60.0" />
          </VBox.margin>
       </JFXTextField>
-      <JFXTextField fx:id="port" alignment="TOP_LEFT" labelFloat="true" prefHeight="40.0" prefWidth="150.0" promptText="%server.textField.port" styleClass="textField" stylesheets="@../../styles.css" text="123">
+      <JFXTextField fx:id="port" alignment="TOP_LEFT" labelFloat="true" prefHeight="40.0" prefWidth="150.0" promptText="%server.textField.port" styleClass="text-field-button" stylesheets="@../../styles.css" text="123">
          <VBox.margin>
             <Insets bottom="40.0" left="20.0" right="20.0" top="40.0" />
          </VBox.margin>

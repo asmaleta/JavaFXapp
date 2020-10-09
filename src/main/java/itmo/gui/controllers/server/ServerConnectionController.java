@@ -19,6 +19,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
 import lombok.Data;
 import org.apache.log4j.Logger;
 
@@ -93,11 +94,11 @@ public class ServerConnectionController implements Initializable, LangSwitcher {
 
     private boolean validAddress(String string) {
         if (clientUtils.userManager().checkStringRegex(string, "^\\d{1,3}[.]{1}\\d{1,3}[.]{1}\\d{1,3}[.]{1}\\d{1,3}$")) {
-            serverAddress.getStyleClass().remove("error");
+            serverAddress.setUnFocusColor(Paint.valueOf("black"));
             serverAddress.setPromptText((resources.getString("server.textField.serverAddress")));
             return true;
         } else {
-            serverAddress.getStyleClass().setAll("error");
+            serverAddress.setUnFocusColor(Paint.valueOf("red"));
             serverAddress.setPromptText(resources.getString("server.textField.error.serverAddress"));
             return false;
         }
@@ -106,11 +107,11 @@ public class ServerConnectionController implements Initializable, LangSwitcher {
 
     private boolean validPort(String string) {
         if (clientUtils.userManager().checkIntInputWithParameters(string, 1, 65535)) {
-            port.getStyleClass().remove("error");
+            port.setUnFocusColor(Paint.valueOf("black"));
             port.setPromptText(resources.getString("server.textField.port"));
             return true;
         } else {
-            port.getStyleClass().setAll("error");
+            port.setUnFocusColor(Paint.valueOf("red"));
             port.setPromptText(resources.getString("server.textField.error.port"));
             return false;
         }
