@@ -1,5 +1,8 @@
 package itmo.utils;
 
+import itmo.client.ClientProviding;
+import itmo.gui.AlertMaker;
+import javafx.scene.control.TextArea;
 import lab6common.data.Driver;
 import lab6common.data.Package;
 import lab6common.generatedclasses.*;
@@ -44,11 +47,7 @@ public class UserManager {
         map.add("remove_greater");
         map.add("remove_lower");
         map.add("sum_of_distance");
-        map.add("get_collection");
         map.add("update_id");
-        map.add("exit");
-        map.add("registration");
-        map.add("remove_driver");
     }
 
     public void setDriver(Driver driver) {
@@ -78,7 +77,7 @@ public class UserManager {
             writer.write(message);
             writer.flush();
         } catch (IOException e) {
-            System.out.print("Ошибка при выводе(( ");
+            System.out.print("Error while outputting (( ");
         }
     }
 
@@ -107,12 +106,12 @@ public class UserManager {
     public Route readRoute() throws NoSuchElementException, NoCorrectInputException {
         String name;
         do {
-            name = readString("Введите название маршрута: ", false);
+            name = readString("Enter route name: ", false);
         } while (name.isEmpty());
         Coordinates coordinates = readCoordinates();
         Location to = readLocationTo();
         Location from = readLocationFrom();
-        Float distance = parseFloatInputWithParameters("Введите длину маршрута больше 1: ", 1.0f, Float.POSITIVE_INFINITY);
+        Float distance = parseFloatInputWithParameters("Enter route length greater than 1: ", 1.0f, Float.POSITIVE_INFINITY);
         return new Route(name, coordinates, from, to, distance);
     }
 
@@ -151,15 +150,15 @@ public class UserManager {
     public boolean checkFloatInput(String input) throws NoCorrectInputException {
         try {
             if (input == null) {
-                if (!manualInput) throw new NoCorrectInputException(input + " - это вам не null");
-                writeln(input + " - это вам не null");
+                if (!manualInput) throw new NoCorrectInputException(input + " - this is not null for you");
+                writeln(input + " - this is not null for you");
                 return false;
             }
             Float.parseFloat(input);
             return true;
         } catch (NumberFormatException e) {
-            if (!manualInput) throw new NoCorrectInputException(input + " - это вам не Float");
-            writeln(input + " - это вам не Float");
+            if (!manualInput) throw new NoCorrectInputException(input + " - this is not Float for you");
+            writeln(input + " - this is not Float for you");
             return false;
         }
     }
@@ -173,15 +172,15 @@ public class UserManager {
     public boolean checkIntInput(String input) throws NoCorrectInputException {
         try {
             if (input == null) {
-                if (!manualInput) throw new NoCorrectInputException(input + " - это вам не null");
-                writeln(input + " - это вам не null");
+                if (!manualInput) throw new NoCorrectInputException(input + "- this is not null for you");
+                writeln(input + " - this is not null for you");
                 return false;
             }
             Integer.parseInt(input);
             return true;
         } catch (NumberFormatException e) {
-            if (!manualInput) throw new NoCorrectInputException(input + " - это вам не Integer");
-            writeln(input + " - это вам не Integer");
+            if (!manualInput) throw new NoCorrectInputException(input + " - this is not Integer for you");
+            writeln(input + " - this is not Integer for you");
             return false;
         }
     }
@@ -204,15 +203,15 @@ public class UserManager {
     public boolean checkLongInput(String input) throws NoCorrectInputException {
         try {
             if (input == null) {
-                if (!manualInput) throw new NoCorrectInputException(input + " - это вам не null");
-                writeln(input + " - это вам не null");
+                if (!manualInput) throw new NoCorrectInputException(input + " - this is not null for you");
+                writeln(input + " - this is not null for you");
                 return false;
             }
             Long.parseLong(input);
             return true;
         } catch (NumberFormatException e) {
-            if (!manualInput) throw new NoCorrectInputException(input + " - это вам не Long");
-            writeln(input + " - это вам не Long");
+            if (!manualInput) throw new NoCorrectInputException(input + " - this is not Long for you");
+            writeln(input + " - this is not Long for you");
             return false;
         }
     }
@@ -242,15 +241,15 @@ public class UserManager {
     }
 
     /**
-     * Метод парсит строку в Int
+     * Метод парсит строку в Float
      *
-     * @param input
+     * @param message
      */
 
-    public Float parseFloatInput(String input) {
+    public Float parseFloatInput(String message) {
         String res;
         do {
-            res = input;
+            res = readString(message, false);
         } while (!checkFloatInput(res));
         return Float.parseFloat(res);
     }
@@ -300,11 +299,11 @@ public class UserManager {
         String result = "";
         do {
             if (result == null) {
-                writeln("Введите не пустую строку.");
+                writeln("Please enter a non-empty string.");
             }
             if (!manualInput && !hasNextLine()) {
                 scriptModeOff();
-                LOGGER.log(Level.ERROR, "Недостаточно введенных данных");
+                LOGGER.log(Level.ERROR, "Insufficient data entered");
             }
             if (manualInput) {
                 write(message);
@@ -313,89 +312,61 @@ public class UserManager {
             result = result.isEmpty() ? null : result;
         } while (manualInput && !nullable && result == null);
         if (!manualInput && result == null) {
-            LOGGER.log(Level.ERROR, "Это поле не может быть null");
+            LOGGER.log(Level.ERROR, "This field cannot be null");
         }
         return result;
     }
 
-    public Driver readDriver() {
-        boolean flag = true;
-        String line = null;
-        Driver driver = new Driver();
-        while (flag) {
-            write("Введите логин: ");
-            line = read();
-            line = line.replaceAll("\\s+", "");
-            if (line == null || line.equals("")) {
-                writeln("Введие не пустую строку");
-            } else {
-                driver.setLogin(line);
-                flag = false;
-            }
-        }
-        flag = true;
-        while (flag) {
-            write("Введите пароль: ");
-            line = read();
-            line = line.replaceAll("\\s+", "");
-            if (line == null || line.equals("")) {
-                writeln("Введие не пустую строку");
-            } else {
-                driver.setPassword(line);
-                flag = false;
-            }
-        }
-        return driver;
-    }
 
-    public String[] readRequest() {
-        boolean flag = true;
+    public void readRequests(TextArea output, ClientProviding clientProviding) {
         String line;
         String[] inputProcessing = new String[2];
-        while (flag) {
-            if (!manualInput && !hasNextLine()) {
-                scriptModeOff();
-            }
-            if (manualInput) {
-                write("Введите команду: ");
-            }
+        while (scanner.hasNext()) {
             line = read();
             if (line == null) {
-                writeln("Введие не пустую строку");
+                output.appendText("\nEntering not an empty string");
             } else {
                 inputProcessing = inputProcessing(line);
                 if (haveCommand(inputProcessing[0]) && chekArg(inputProcessing)) {
-                    if (!manualInput) {
-                        writeln("Считана команда : " + inputProcessing[0]);
+                    output.appendText("\nCommand read : " + inputProcessing[0]);
+                    try {
+                        output.appendText((String) "\n" + clientProviding.dataExchangeWithServer(inputProcessing[0]
+                                , inputProcessing[1], needRoute(inputProcessing[0])).getAns());
+                    }catch (NoCorrectInputException e){
+                        e.printStackTrace();
+                        output.appendText("\n"+e.getMessage());
                     }
-                    if (inputProcessing[0].equals("execute_script")) {
-                        scriptModeOn(inputProcessing[1]);
-                    } else {
-                        flag = false;
-                    }
+                }else{
+                    output.appendText("\nInvalid command or argument");
                 }
             }
         }
-        return inputProcessing;
+        scriptModeOff();
     }
 
     //execute_script clientMod/script.txt
     public void scriptModeOff() {
         setScanner(new Scanner(new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))));
         manualInput = true;
-        writeln("Скрипт выполнен");
     }
 
-    public void scriptModeOn(String path) {
+    public boolean scriptModeOn(String path) {
         try {
             setScanner(new Scanner(new FileReader(path)));
             manualInput = false;
+            return true;
         } catch (NullPointerException e) {
-            LOGGER.log(Level.ERROR, "Файл пуст!");
+            AlertMaker.showErrorMessage("Load file error", "The file is empty!!");
+            LOGGER.log(Level.ERROR, "The file is empty!");
+            return false;
         } catch (FileNotFoundException e) {
-            LOGGER.log(Level.ERROR, "Файла по указанному пути не существует!");
+            AlertMaker.showErrorMessage("Load file error", "The file does not exist at the specified path!");
+            LOGGER.log(Level.ERROR, "The file does not exist at the specified path!");
+            return false;
         } catch (IOException e) {
-            LOGGER.log(Level.ERROR, "Ошибка при рабтое с файлом");
+            AlertMaker.showErrorMessage("Load file error", "Error while working with file");
+            LOGGER.log(Level.ERROR, "Error while working with file\n");
+            return false;
         }
     }
 
@@ -411,7 +382,7 @@ public class UserManager {
         if (map.contains(line)) {
             return true;
         } else {
-            LOGGER.log(Level.INFO, "Неверное имя команды : " + line);
+            LOGGER.log(Level.INFO, "Invalid command name: " + line);
             return false;
         }
     }
@@ -434,7 +405,20 @@ public class UserManager {
                 return new Package(command, null, driver);
         }
     }
-
+    public Route needRoute(String command){
+        switch (command) {
+            case "update_id":
+                return readRoute();
+            case "remove_greater":
+                return readRoute();
+            case "remove_lower":
+                return readRoute();
+            case "add":
+                return readRoute();
+            default:
+                return null;
+        }
+    }
     public boolean chekArg(String[] line) {
         switch (line[0]) {
             case "filter_less_than_distance":

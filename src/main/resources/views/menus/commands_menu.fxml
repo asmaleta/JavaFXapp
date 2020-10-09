@@ -35,7 +35,7 @@
                   <Font name="Arial" size="10.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="execute_script" alignment="CENTER" cache="true" contentDisplay="TEXT_ONLY" prefHeight="50.0" prefWidth="200.0" style="-fx-border-color: black;" text="Выполнить скрипт" textAlignment="CENTER" wrapText="true">
+            <JFXButton fx:id="execute_script" alignment="CENTER" cache="true" contentDisplay="TEXT_ONLY" onAction="#scriptButton" prefHeight="50.0" prefWidth="200.0" style="-fx-border-color: black;" text="Выполнить скрипт" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Arial" size="10.0" />
                </font>

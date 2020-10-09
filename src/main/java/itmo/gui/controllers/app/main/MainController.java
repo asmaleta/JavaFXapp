@@ -1,7 +1,6 @@
 package itmo.gui.controllers.app.main;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
 import itmo.gui.AlertMaker;
 import itmo.gui.controllers.app.AddFormController;
 import itmo.gui.controllers.app.AppPane;
@@ -16,11 +15,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import lombok.Data;
 
-import javax.xml.bind.ValidationEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
@@ -153,7 +150,28 @@ public class MainController implements Initializable, LangSwitcher {
     }
     public void displayAddRequest(Object response){
         output.setText((String) response);
+    }@FXML
+    private void scriptButton(){
+        if(validStringInput(arg)){
+            if(clientUtils.userManager().scriptModeOn(arg.getText())){
+                clientUtils.userManager().readRequests(output,clientUtils.clientProviding());
+            }
+        }
+
     }
+    private boolean validStringInput(TextField field) {
+        if (clientUtils.userManager().checkStringRegex(field.getText(), "\\S{1,}")) {
+            field.getStyleClass().remove("error");
+            field.setPromptText((resources.getString("commands.textField.arg")));
+            return true;
+        } else {
+            field.getStyleClass().setAll("error");
+            field.setPromptText(resources.getString("commands.textField.error.arg"));
+            return false;
+        }
+
+    }
+
 
 
 }
