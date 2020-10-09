@@ -83,9 +83,7 @@ public class AddFormController implements Initializable {
                     Float.parseFloat(distance.getText()));
             Object response = clientUtils.clientProviding().dataExchangeWithServer("add", null,
                     route).getAns();
-            if (response instanceof Integer){
-                clientUtils.clientCollectionManager().getRouteList().add(route);
-            }else{
+            if (!(response instanceof Integer)){
                 AlertMaker.showErrorMessage("Load fxml error",(String) response);
             }
            stage.close();

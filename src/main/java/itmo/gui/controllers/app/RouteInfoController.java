@@ -6,11 +6,9 @@ import itmo.utils.ClientUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import lab6common.generatedclasses.Coordinates;
@@ -39,10 +37,10 @@ public class RouteInfoController implements Initializable {
     private JFXTextField name;
 
     @FXML
-    private JFXTextField coordidinateX;
+    private JFXTextField coordinateX;
 
     @FXML
-    private JFXTextField coordidinateY;
+    private JFXTextField coordinateY;
 
     @FXML
     private JFXTextField locationToName;
@@ -82,11 +80,12 @@ public class RouteInfoController implements Initializable {
 
     public void displayRoute(Route route) {
         selectedRoute = route;
+        System.out.println(route);
         id.setText(route.getId().toString());
         name.setText(route.getName());
-        coordidinateX.setText(route.getCorX().toString());
-        coordidinateY.setText(route.getCorY().toString());
-        locationFromName.setText(route.getToName());
+        coordinateX.setText(route.getCorX().toString());
+        coordinateY.setText(route.getCorY().toString());
+        locationFromName.setText(route.getFromName());
         locationFromX.setText(route.getFromX().toString());
         locationFromY.setText(route.getFromY().toString());
         locationToName.setText(route.getToName());
@@ -100,10 +99,10 @@ public class RouteInfoController implements Initializable {
 
     @FXML
     private void buttonAddCommand() {
-        try {
+        try{
             Stage stage = new Stage();
             AddFormController addFormController = new AddFormController(this,stage);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/forms/add_form.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/forms/route_form.fxml"));
             loader.setController(addFormController);
             loader.setResources(resources);
             Parent root = loader.load();
@@ -116,56 +115,38 @@ public class RouteInfoController implements Initializable {
     }
     @FXML
     private void buttonRemoveCommand() {
-        try {
-            Stage stage = new Stage();
-            AddFormController addFormController = new AddFormController(this,stage);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/forms/add_form.fxml"));
-            loader.setController(addFormController);
-            loader.setResources(resources);
-            Parent root = loader.load();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            AlertMaker.showErrorMessage("Load fxml error", null);
-        }
+            Object response = clientUtils.clientProviding().dataExchangeWithServer("remove_by_id", selectedRoute.getId().toString(),null).getAns();
+            if (response instanceof Integer){
+                LOGGER.log(Level.INFO, "Success delete "+ response);
+            }else{
+                AlertMaker.showErrorMessage("Request ex", (String) response);
+            }
     }
     @FXML
     private void buttonClearCommand() {
-        try {
-            Stage stage = new Stage();
-            AddFormController addFormController = new AddFormController(this,stage);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/forms/add_form.fxml"));
-            loader.setController(addFormController);
-            loader.setResources(resources);
-            Parent root = loader.load();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            AlertMaker.showErrorMessage("Load fxml error", null);
-        }
+        Object response = clientUtils.clientProviding().dataExchangeWithServer("clear", null,null).getAns();
+        AlertMaker.showSimpleAlert("Message", (String) response);
     }
     @FXML
     private void buttonChangeCommand() {
-        if (validStringInput(name) & validLongInput(coordidinateX) & validIntInput(coordidinateY)
+        if (validStringInput(name) & validLongInput(coordinateX) & validIntInput(coordinateY)
                 & validStringInput(locationToName) & validLongInput(locationToX) & validLongInput(locationToY)
                 & validStringInput(locationFromName) & validLongInput(locationFromX) & validLongInput(locationFromY)
                 & validFloatInput(distance)) {
             Route route = new Route(name.getText(),
-                    new Coordinates(Long.parseLong(coordidinateX.getText()),
-                            Integer.parseInt(coordidinateY.getText())),
+                    new Coordinates(Long.parseLong(coordinateX.getText()),
+                            Integer.parseInt(coordinateY.getText())),
                     new Location(Long.parseLong(locationFromX.getText()),
                             Long.parseLong(locationFromY.getText()),locationFromName.getText()),
                     new Location(Long.parseLong(locationToX.getText()),
                             Long.parseLong(locationToY.getText()),locationToName.getText()),
                     Float.parseFloat(distance.getText()));
-            Object response = clientUtils.clientProviding().dataExchangeWithServer("update_by_id", selectedRoute.getId().toString(),
+            Object response = clientUtils.clientProviding().dataExchangeWithServer("update_id", selectedRoute.getId().toString(),
                     route).getAns();
             if (response instanceof Integer){
                 LOGGER.log(Level.INFO, "Success update "+ response);
             }else{
-                AlertMaker.showErrorMessage("Load fxml error", (String) response);
+                AlertMaker.showErrorMessage("Request ex", (String) response);
             }
         }
     }

@@ -423,7 +423,7 @@ public class UserManager {
             case "remove_by_id":
                 return new Package(command, Integer.parseInt(arg), driver);
             case "update_id":
-                return new Package(command, Integer.parseInt(arg), readRoute(), driver);
+                return new Package(command, Integer.parseInt(arg), route, driver);
             case "add":
                 return new Package(command, null, route, driver);
             case "remove_greater":

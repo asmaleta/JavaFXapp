@@ -80,7 +80,7 @@ public class ClientProviding {
         Package ans = new Package("Не был получен ответ");
         try {
             connect();
-            LOGGER.log(Level.INFO, "Подключение к серверу");
+            LOGGER.log(Level.INFO, "Connect to server....");
             boolean connect = true;
             while (connect) {
                 selector.selectNow();
@@ -101,7 +101,6 @@ public class ClientProviding {
                         connect = false;
                         break;
                     } else if (key.isWritable()) {
-                        chanell.finishConnect();
                         dataExchangeClient.packageSend(userManager.createPackage(command, arg,route));
                         key.interestOps(SelectionKey.OP_READ);
                     }

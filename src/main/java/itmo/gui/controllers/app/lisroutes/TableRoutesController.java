@@ -78,8 +78,7 @@ public class TableRoutesController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
         initializeCol();
-        updateData();
-
+         updateData();
     }
 
     private boolean updateLocalCollection() {

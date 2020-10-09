@@ -8,6 +8,10 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 public class DataExchangeClient{
 
@@ -18,22 +22,22 @@ public class DataExchangeClient{
 
     public DataExchangeClient(){
         this.byteBufferGet =  ByteBuffer.allocate(1024);
+
     }
     public void connect (SocketChannel socketChannel){
         this.socketChannel = socketChannel;
     }
-
-    public void packageSend(Package request) throws IOException {
+    public synchronized void packageSend(Package request) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
         oos.writeObject(request);
         oos.flush();
         byteBufferSend = ByteBuffer.wrap(baos.toByteArray());
         while (socketChannel.write(byteBufferSend) > 0);
-        LOGGER.log(Level.INFO,"Запрос отпрален");
+        LOGGER.log(Level.INFO,"Request send");
     }
 
-    public Package packageGet() throws IOException, ClassCastException, ClassNotFoundException {
+    public synchronized Package packageGet() throws IOException, ClassCastException, ClassNotFoundException {
         ByteArrayInputStream bais = new ByteArrayInputStream(listToByteArray(getBytesFromChannel()));
         ObjectInputStream objectInputStream = new ObjectInputStream(bais);
         Package answer = (Package) objectInputStream.readObject();

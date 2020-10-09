@@ -107,11 +107,11 @@ public class LoginRegisterController implements Initializable, LangSwitcher {
         if (validTextField(username) & validPasswordField(password)) {
             login.setDisable(true);
             register.setDisable(true);
-
+            Driver driver = new Driver(username.getText(), password.getText());
             clientUtils.userManager().setDriver(new Driver(username.getText(), password.getText()));
             Package ans = clientUtils.clientProviding().dataExchangeWithServer("registration", null,null );
-            Driver driver = (Driver) ans.getAns();
-            if (driver.getId() == -1) {
+            Driver driverAns = (Driver) ans.getAns();
+            if (driverAns.getId() == -1) {
                 login.setDisable(false);
                 register.setDisable(false);
                 AlertMaker.showErrorMessage("Driver exist", null);
