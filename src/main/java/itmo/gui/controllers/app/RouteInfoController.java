@@ -80,7 +80,6 @@ public class RouteInfoController implements Initializable {
 
     public void displayRoute(Route route) {
         selectedRoute = route;
-        System.out.println(route);
         id.setText(route.getId().toString());
         name.setText(route.getName());
         coordinateX.setText(route.getCorX().toString());
@@ -96,12 +95,18 @@ public class RouteInfoController implements Initializable {
                 DateTimeFormatter.ofPattern("dd/MMM HH:mm z")
                         .withLocale(Locale.getDefault())));
     }
-
+    public void displayAddRequest(Object response){
+        if (response instanceof Integer){
+            LOGGER.log(Level.INFO, "Success update "+ response);
+        }else{
+            AlertMaker.showErrorMessage("Request ex", (String) response);
+        }
+    }
     @FXML
     private void buttonAddCommand() {
         try{
             Stage stage = new Stage();
-            AddFormController addFormController = new AddFormController(this,stage);
+            AddFormController addFormController = new AddFormController(this,"add" , stage);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/forms/route_form.fxml"));
             loader.setController(addFormController);
             loader.setResources(resources);

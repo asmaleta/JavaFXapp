@@ -1,6 +1,13 @@
 .connectionPane{
 
 }
+#port {
+
+
+}
 .app-panel-buttons{
     -fx-background-color: #cfcdcd;
+}
+.error{
+    -fx-background-color: red !important;
 }

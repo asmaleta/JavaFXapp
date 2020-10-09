@@ -77,7 +77,7 @@ public class ClientProviding {
     }
 
     public Package dataExchangeWithServer(String command, String arg, Route route) {
-        Package ans = new Package("Не был получен ответ");
+        Package ans = new Package("No response was received");
         try {
             connect();
             LOGGER.log(Level.INFO, "Connect to server....");
@@ -108,7 +108,7 @@ public class ClientProviding {
             }
             close();
         }catch (ClassCastException e){
-            AlertMaker.showErrorMessage("Ошибка создания пакета", null);
+            AlertMaker.showErrorMessage("Package creation error", null);
         }catch (IOException e){
             e.printStackTrace();
             AlertMaker.showErrorMessage("I/0 Exception", null);

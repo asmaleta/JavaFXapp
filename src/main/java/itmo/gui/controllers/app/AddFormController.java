@@ -3,6 +3,7 @@ package itmo.gui.controllers.app;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import itmo.gui.AlertMaker;
+import itmo.gui.controllers.app.main.MainController;
 import itmo.utils.ClientUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,14 +55,22 @@ public class AddFormController implements Initializable {
 
     private ResourceBundle resources;
     private ClientUtils clientUtils;
-   private RouteInfoController routeInfoController;
+   private RouteInfoController infoController;
+    private MainController mainController;
+   private String command;
    private Stage stage;
-    public AddFormController(RouteInfoController routeInfoController, Stage stage) {
+    public AddFormController(RouteInfoController routeInfoController, String command, Stage stage) {
         this.clientUtils = routeInfoController.getClientUtils();
-        this.routeInfoController = routeInfoController;
+        this.infoController = routeInfoController;
         this.stage = stage;
+        this.command = command;
     }
-
+    public AddFormController(MainController mainController, String command,Stage stage) {
+        this.clientUtils = mainController.getClientUtils();
+        this.mainController = mainController;
+        this.stage = stage;
+        this.command = command;
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
@@ -81,12 +90,15 @@ public class AddFormController implements Initializable {
                     new Location(Long.parseLong(locationToX.getText()),
                             Long.parseLong(locationToY.getText()),locationToName.getText()),
                     Float.parseFloat(distance.getText()));
-            Object response = clientUtils.clientProviding().dataExchangeWithServer("add", null,
+            Object response = clientUtils.clientProviding().dataExchangeWithServer(command, null,
                     route).getAns();
-            if (!(response instanceof Integer)){
-                AlertMaker.showErrorMessage("Load fxml error",(String) response);
+
+            if (mainController != null) {
+                mainController.displayAddRequest(response);
+            } else {
+                infoController.displayAddRequest(response);
             }
-           stage.close();
+            stage.close();
         }
     }
 
