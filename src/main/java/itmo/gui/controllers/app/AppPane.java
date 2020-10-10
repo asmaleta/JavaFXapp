@@ -162,11 +162,13 @@ public class AppPane implements Initializable {
             while (true) {
                 try {
                     Thread.sleep(3000);
-                    if (tableRoutesController != null) {
-                        tableRoutesController.updateTable();
-                    }
-                    if (visualizationController != null) {
-                        visualizationController.updateData();
+                    synchronized (this) {
+                        if (tableRoutesController != null) {
+                            tableRoutesController.updateTable();
+                        }
+                        if (visualizationController != null) {
+                            visualizationController.updateData();
+                        }
                     }
                 } catch (InterruptedException e) {
                     LOGGER.log(Level.ERROR, "Потоковая ошибка");

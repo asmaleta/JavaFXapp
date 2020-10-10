@@ -129,9 +129,11 @@ public class TableRoutesController implements Initializable {
 
     public synchronized void updateTable(){
         if (updateLocalCollection()){
-            updateData();
+            Platform.runLater(() -> {
+                updateData();
+            });
+            }
         }
-    }
     public void updateData(){
         routeList.clear();
         routeList.addAll(appPane.getClientUtils().clientCollectionManager().getRouteList());

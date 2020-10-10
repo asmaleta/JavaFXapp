@@ -165,6 +165,7 @@ public class MainController implements Initializable, LangSwitcher {
             field.setPromptText((resources.getString("commands.textField.arg")));
             return true;
         } else {
+
             field.getStyleClass().setAll("error");
             field.setPromptText(resources.getString("commands.textField.error.arg"));
             return false;

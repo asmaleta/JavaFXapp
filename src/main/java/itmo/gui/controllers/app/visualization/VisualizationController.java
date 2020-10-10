@@ -5,10 +5,12 @@ import itmo.gui.canvas.ResizableMapCanvas;
 import itmo.gui.controllers.app.AppPane;
 import itmo.utils.ClientCollectionManager;
 import itmo.utils.ClientUtils;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import lab6common.generatedclasses.Route;
+import lombok.Data;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -16,7 +18,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
+@Data
 public class VisualizationController implements Initializable {
     public static final Logger LOGGER = Logger.getLogger(VisualizationController.class.getName());
     @FXML
@@ -30,13 +32,14 @@ public class VisualizationController implements Initializable {
 
     public VisualizationController(AppPane appPanelController) {
         this.appPane = appPanelController;
-        routeList = appPanelController.getClientUtils().clientCollectionManager().getRouteList();
+        routeList = new ArrayList<>();
         clientUtils = appPanelController.getClientUtils();
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         resource = resources;
         routeMapCanvas = new ResizableMapCanvas((ArrayList<Route>) routeList, wrapperMapPane);
         wrapperMapPane.getChildren().add(routeMapCanvas);
@@ -50,14 +53,18 @@ public class VisualizationController implements Initializable {
     }
 
     public void updateData() {
-        if (needAddRoute())
+
+        if (needAddRoute()&& routeList.size() > 0) {
+            Platform.runLater(() -> {
             checkForNewRoutes();
-        else {
+        });
+        }else {
             routeList.clear();
             routeList.addAll(appPane.getClientUtils().clientCollectionManager().getRouteList());
             routeMapCanvas.setObj(appPane.getClientUtils().clientCollectionManager().getRouteList());
             routeMapCanvas.draw();
         }
+
     }
 
     private void checkForNewRoutes() {
@@ -78,7 +85,7 @@ public class VisualizationController implements Initializable {
         }
     }
 
-    private boolean needAddRoute() {
+    public boolean needAddRoute() {
         Object response = clientUtils.clientProviding().dataExchangeWithServer("get_collection", null, null).getAns();
         if (response instanceof List) {
             List<Route> routes = (List<Route>) response;
