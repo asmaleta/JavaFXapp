@@ -97,10 +97,7 @@ public class TableRoutesController implements Initializable {
     }
     @FXML
     private void getInfoRoute(){
-        try {
             appPane.getRouteInfoController().displayRoute(routesTable.getSelectionModel().getSelectedItem());
-        }catch (NullPointerException e){
-        }
     }
     private void initializeCol() {
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));

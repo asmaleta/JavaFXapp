@@ -79,21 +79,25 @@ public class RouteInfoController implements Initializable {
     }
 
     public void displayRoute(Route route) {
-        selectedRoute = route;
-        id.setText(route.getId().toString());
-        name.setText(route.getName());
-        coordinateX.setText(route.getCorX().toString());
-        coordinateY.setText(route.getCorY().toString());
-        locationFromName.setText(route.getFromName());
-        locationFromX.setText(route.getFromX().toString());
-        locationFromY.setText(route.getFromY().toString());
-        locationToName.setText(route.getToName());
-        locationToX.setText(route.getToX().toString());
-        locationToY.setText(route.getToY().toString());
-        distance.setText(route.getDistance().toString());
-        date.setText(route.getCreationDate().format(
-                DateTimeFormatter.ofPattern("dd/MMM HH:mm z")
-                        .withLocale(Locale.getDefault())));
+        try {
+            selectedRoute = route;
+            id.setText(route.getId().toString());
+            name.setText(route.getName());
+            coordinateX.setText(route.getCorX().toString());
+            coordinateY.setText(route.getCorY().toString());
+            locationFromName.setText(route.getFromName());
+            locationFromX.setText(route.getFromX().toString());
+            locationFromY.setText(route.getFromY().toString());
+            locationToName.setText(route.getToName());
+            locationToX.setText(route.getToX().toString());
+            locationToY.setText(route.getToY().toString());
+            distance.setText(route.getDistance().toString());
+            date.setText(route.getCreationDate().format(
+                    DateTimeFormatter.ofPattern("dd/MMM HH:mm z")
+                            .withLocale(Locale.getDefault())));
+        }catch (NullPointerException e){
+
+        }
     }
     public void displayAddRequest(Object response){
         if (response instanceof Integer){

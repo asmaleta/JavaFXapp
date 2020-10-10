@@ -56,6 +56,7 @@ public class AppPane implements Initializable {
 
     public void loadMain() {
         try {
+            visualizationController = null;
             tableRoutesController = null;
             loadAppPanel();
             this.mainController = new MainController(this);
@@ -74,6 +75,7 @@ public class AppPane implements Initializable {
     }
 
     public void loadListObj() {
+        visualizationController = null;
         try {
             loadAppPanel();
             this.tableRoutesController = new TableRoutesController(this);
@@ -95,8 +97,22 @@ public class AppPane implements Initializable {
 
     public void loadVisualization() {
         tableRoutesController = null;
-        loadAppPanel();
-        this.visualizationController = new VisualizationController(this);
+        try {
+            loadAppPanel();
+            this.visualizationController = new VisualizationController(this);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/tables/map_table.fxml"));
+            loader.setController(visualizationController);
+            loader.setResources(resources);
+            Parent root = loader.load();
+            StackPane.setAlignment(root, Pos.CENTER_LEFT);
+            StackPane.setMargin(root, new Insets(10,0,0,10));
+            appPane.getChildren().addAll(root);
+            loadLangElements(mainController);
+            loadRouteInfoPanel();
+        } catch (IOException e) {
+            e.printStackTrace();
+            AlertMaker.showErrorMessage("Load fxml error", null);
+        }
         appPanelController.getVisualization().setDisable(true);
     }
 
@@ -148,6 +164,9 @@ public class AppPane implements Initializable {
                     Thread.sleep(3000);
                     if (tableRoutesController != null) {
                         tableRoutesController.updateTable();
+                    }
+                    if (visualizationController != null) {
+                        visualizationController.updateData();
                     }
                 } catch (InterruptedException e) {
                     LOGGER.log(Level.ERROR, "Потоковая ошибка");

@@ -7,19 +7,25 @@ import itmo.utils.ClientUtils;
 import itmo.utils.UserManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lab6common.generatedclasses.Coordinates;
 import lab6common.generatedclasses.Location;
 import lab6common.generatedclasses.Route;
 import org.apache.log4j.*;
 
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,6 +38,16 @@ public class ClientApp  extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
+        /*Canvas canvas = new Canvas(900,900);
+        GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
+        drawShape(graphicsContext,5,10,10);
+        Group root = new Group();
+        Scene scene = new Scene(root,900,900);
+
+        root.getChildren().add(canvas);
+        primaryStage.setTitle("Road to deduction");
+        primaryStage.setScene(scene);
+        primaryStage.show();*/
         UserManager userManager = new UserManager(
                 new BufferedReader(new InputStreamReader(System.in)),
                 new BufferedWriter(new OutputStreamWriter(System.out)), true);
@@ -61,6 +77,15 @@ public class ClientApp  extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Road to deduction");
         primaryStage.show();
+
+    }
+    private void drawShape(GraphicsContext gc, double size, double x, double y) {
+        gc.fillPolygon(new double[]{45*size + x, 85*size + x, 65*size + x},
+                new double[]{70*size + y, 70*size + y, 120*size + y}, 3);
+        gc.fillOval(40 * size + x, 40 * size + y, 50 * size, 50 * size);
+        gc.setFill(Color.WHITE);
+        gc.fillOval(50 * size + x, 50 * size + y, 30 * size, 30 * size);
+
     }
 }
 
