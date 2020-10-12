@@ -40,41 +40,7 @@ public class ClientProviding {
        socketAddress = new InetSocketAddress(ADDRESS, PORT);
     }
 
-    public void clientApp() {
-            /*try {
 
-            } catch (ConnectException e) {
-
-            } catch (EOFException e) {
-                LOGGER.log(Level.ERROR, "Ошибка при чтении потока");
-            } catch (NoRouteToHostException e) {
-                LOGGER.log(Level.ERROR, "Неверный адрес");
-                ADDRESS = userManager.readString("Соберись и введи норм адрес : ", false);
-                socketAddress = new InetSocketAddress(ADDRESS, PORT);
-            } catch (UnresolvedAddressException e) {
-                LOGGER.log(Level.ERROR, "Ловушка Афанаса, FFFFFFFF");
-                ADDRESS = userManager.readString("Соберись и введи норм адрес : ", false);
-                socketAddress = new InetSocketAddress(ADDRESS, PORT);
-            } catch (IOException e) {
-                LOGGER.log(Level.ERROR, "Потоковая ошиб очка");
-            } catch (NoSuchElementException e) {
-                LOGGER.log(Level.ERROR, "Ошибка при чтении ввода");
-            }*/
-    }
-
-    public boolean reconnecting() {
-        LOGGER.log(Level.ERROR, "Нет связи с сервером. Подключться ещё раз (введите {yes} или {no})?");
-        String answer;
-        do{
-                answer = userManager.readString("Ответ : ", false);
-            if (answer.equals("no")) {
-                return true;
-            } else if (!answer.equals("yes")) {
-                userManager.writeln("Введите корректный ответ.");
-            }
-        } while (!answer.equals("yes"));
-        return false;
-    }
 
     public Package dataExchangeWithServer(String command, String arg, Route route) {
         Package ans = new Package("No response was received");
@@ -106,8 +72,10 @@ public class ClientProviding {
                 }
             }
             close();
-        }catch (ClassCastException e){
+        }catch (ClassCastException e) {
             AlertMaker.showErrorMessage("Package creation error", null);
+        }catch (ConnectException e){
+            AlertMaker.showErrorMessage("Connection error", "Failed to connect to server");
         }catch (IOException e){
             e.printStackTrace();
             AlertMaker.showErrorMessage("I/0 Exception", null);
@@ -115,13 +83,6 @@ public class ClientProviding {
             return ans;
         }
 
-    }
-    public boolean testConnect() throws IOException {
-        chanell = SocketChannel.open();
-        chanell.configureBlocking(false);
-        chanell.connect(socketAddress);
-        chanell.finishConnect();
-        return chanell.isConnectionPending() || chanell.isConnected();
     }
     public void connect() throws IOException {
         selector = Selector.open();
