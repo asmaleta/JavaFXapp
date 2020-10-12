@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Data
-public class AppPane implements Initializable {
+public class AppPane implements Initializable{
     public static final Logger LOGGER = Logger.getLogger(AppPane.class.getName());
     @FXML
     private StackPane appPane;
@@ -86,7 +86,7 @@ public class AppPane implements Initializable {
             StackPane.setAlignment(root, Pos.CENTER_LEFT);
             StackPane.setMargin(root, new Insets(10,0,0,10));
             appPane.getChildren().addAll(root);
-            loadLangElements(mainController);
+            loadLangElements(tableRoutesController);
             appPanelController.getListObj().setDisable(true);
             loadRouteInfoPanel();
         } catch (IOException e) {
@@ -107,7 +107,7 @@ public class AppPane implements Initializable {
             StackPane.setAlignment(root, Pos.CENTER_LEFT);
             StackPane.setMargin(root, new Insets(10,0,0,10));
             appPane.getChildren().addAll(root);
-            loadLangElements(mainController);
+            loadLangElements(visualizationController);
             loadRouteInfoPanel();
         } catch (IOException e) {
             e.printStackTrace();
@@ -171,7 +171,7 @@ public class AppPane implements Initializable {
                         }
                     }
                 } catch (InterruptedException e) {
-                    LOGGER.log(Level.ERROR, "Потоковая ошибка");
+                    LOGGER.log(Level.ERROR, "Streaming error");
                 }
             }
         }

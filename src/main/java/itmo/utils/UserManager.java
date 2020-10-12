@@ -11,6 +11,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -285,7 +286,7 @@ public class UserManager {
     }
 
     public boolean checkStringRegex(String message, String regex) {
-        return Pattern.matches(regex, message);
+        return Pattern.matches(regex, message) ;
     }
 
     /**
@@ -308,7 +309,7 @@ public class UserManager {
             if (manualInput) {
                 write(message);
             }
-            result = scanner.nextLine();
+                result = scanner.nextLine();
             result = result.isEmpty() ? null : result;
         } while (manualInput && !nullable && result == null);
         if (!manualInput && result == null) {
@@ -333,7 +334,6 @@ public class UserManager {
                         output.appendText((String) "\n" + clientProviding.dataExchangeWithServer(inputProcessing[0]
                                 , inputProcessing[1], needRoute(inputProcessing[0])).getAns());
                     }catch (NoCorrectInputException e){
-                        e.printStackTrace();
                         output.appendText("\n"+e.getMessage());
                     }
                 }else{
@@ -347,6 +347,7 @@ public class UserManager {
     //execute_script clientMod/script.txt
     public void scriptModeOff() {
         setScanner(new Scanner(new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))));
+        scanner.close();
         manualInput = true;
     }
 

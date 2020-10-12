@@ -11,7 +11,7 @@
 <VBox fx:id="connectionMenuBarPane" alignment="CENTER" maxHeight="326.0" maxWidth="439.0" minHeight="326.0" minWidth="439.0" prefHeight="326.0" prefWidth="439.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <!--fx:controller="itmo.gui.controllers.server.ServerMenuController-->
    <children>
-      <Text fx:id="title" pickOnBounds="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Настройка подключенния к серверу" textAlignment="CENTER" wrappingWidth="429.13672065734863">
+      <Text fx:id="title" pickOnBounds="true" strokeType="OUTSIDE" strokeWidth="0.0" text="%server.button.title" textAlignment="CENTER" wrappingWidth="429.13672065734863">
          <font>
             <Font size="24.0" />
          </font>
@@ -31,7 +31,7 @@
       </JFXTextField>
       <HBox prefHeight="41.0" prefWidth="399.0">
          <children>
-            <JFXButton fx:id="connect" alignment="CENTER" onAction="#serverConnection" prefHeight="41.0" prefWidth="430.0" style="-fx-border-color: gray;" text="Подключиться" textAlignment="CENTER">
+            <JFXButton fx:id="connect" alignment="CENTER" onAction="#serverConnection" prefHeight="41.0" prefWidth="430.0" style="-fx-border-color: gray;" text="%server.button.connect" textAlignment="CENTER">
                <HBox.margin>
                   <Insets />
                </HBox.margin>

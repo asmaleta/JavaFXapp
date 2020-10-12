@@ -1,11 +1,15 @@
 package itmo.gui.controllers.app.lisroutes;
 
+import com.jfoenix.controls.JFXTextField;
 import itmo.gui.controllers.app.AppPane;
+import itmo.gui.controllers.lang.LangSwitcher;
 import itmo.utils.ClientCollectionManager;
 import itmo.utils.ClientUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
@@ -22,7 +26,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class TableRoutesController implements Initializable {
+public class TableRoutesController implements Initializable, LangSwitcher {
     public static final Logger LOGGER = Logger.getLogger(TableRoutesController.class.getName());
 
     private final ObservableList<Route> routeList = FXCollections.observableArrayList();
@@ -63,6 +67,8 @@ public class TableRoutesController implements Initializable {
     private TableColumn<Route, Float> distanceCol;
     @FXML
     private TableColumn<Route, ZonedDateTime> dateCol;
+    @FXML
+    private JFXTextField serach;
     private AppPane appPane;
     private ClientUtils clientUtils;
 
@@ -80,6 +86,29 @@ public class TableRoutesController implements Initializable {
         initializeCol();
          updateData();
     }
+    private void loadFilteringOption() {
+        // Filter commands by name functionality
+        FilteredList<Route> filteredData = new FilteredList<>(routeList, s -> true);
+        serach.textProperty().addListener((obs, oldVal, newVal) -> {
+            filteredData.setPredicate(route -> {
+                if (newVal == null || newVal.length() == 0)
+                    return true;
+
+                String writtenText = newVal.toLowerCase();
+                if (String.valueOf(route.getName()).contains(writtenText))
+                    return true;
+                else if (String.valueOf(route.getId()).contains(writtenText))
+                    return true;
+                else if (String.valueOf(route.getDistance()).contains(writtenText))
+                    return true;
+                else
+                    return false;
+            });
+        });
+        SortedList<Route> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(routesTable.comparatorProperty());
+        routesTable.setItems(sortedData);
+    }
 
     private boolean updateLocalCollection() {
         Object response = clientUtils.clientProviding().dataExchangeWithServer("get_collection",null,null ).getAns();
@@ -88,7 +117,7 @@ public class TableRoutesController implements Initializable {
             if (! clientUtils.clientCollectionManager().equals(new ClientCollectionManager((routes)))){
                 clientUtils.clientCollectionManager().getRouteList().clear();
                 clientUtils.clientCollectionManager().getRouteList().addAll((List<Route>) response);
-                LOGGER.log(Level.INFO, "Обновлена коллекция");
+                LOGGER.log(Level.INFO, "Collection updated");
 
                 return true;
             }
@@ -138,6 +167,13 @@ public class TableRoutesController implements Initializable {
         routeList.clear();
         routeList.addAll(appPane.getClientUtils().clientCollectionManager().getRouteList());
         routesTable.setItems(routeList);
+        loadFilteringOption();
 
+    }
+
+    @Override
+    public void switchLanguage() {
+        appPane.setResources( ResourceBundle.getBundle(ClientUtils.resourceBundlePath, Locale.getDefault()));
+        appPane.loadListObj();
     }
 }

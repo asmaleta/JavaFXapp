@@ -3,6 +3,7 @@ package itmo.gui.controllers.app.visualization;
 import itmo.gui.canvas.AbsResizableCanvas;
 import itmo.gui.canvas.ResizableMapCanvas;
 import itmo.gui.controllers.app.AppPane;
+import itmo.gui.controllers.lang.LangSwitcher;
 import itmo.utils.ClientCollectionManager;
 import itmo.utils.ClientUtils;
 import javafx.application.Platform;
@@ -17,9 +18,10 @@ import org.apache.log4j.Logger;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 @Data
-public class VisualizationController implements Initializable {
+public class VisualizationController implements Initializable, LangSwitcher {
     public static final Logger LOGGER = Logger.getLogger(VisualizationController.class.getName());
     @FXML
     private Pane wrapperMapPane;
@@ -92,11 +94,17 @@ public class VisualizationController implements Initializable {
             if (!clientUtils.clientCollectionManager().equals(new ClientCollectionManager((routes)))) {
                 clientUtils.clientCollectionManager().getRouteList().clear();
                 clientUtils.clientCollectionManager().getRouteList().addAll((List<Route>) response);
-                LOGGER.log(Level.INFO, "Обновлена коллекция");
+                LOGGER.log(Level.INFO, "Collection updated");
 
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public void switchLanguage() {
+        appPane.setResources( ResourceBundle.getBundle(ClientUtils.resourceBundlePath, Locale.getDefault()));
+        appPane.loadVisualization();
     }
 }

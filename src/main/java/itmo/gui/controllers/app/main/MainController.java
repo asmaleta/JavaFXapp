@@ -54,31 +54,28 @@ public class MainController implements Initializable, LangSwitcher {
     private ResourceBundle resources;
     private AppPanelController appPanelController;
     private LangController langController;
-
+   private AppPane appPane;
 
     public MainController(AppPane appPane) {
         this.clientUtils = appPane.getClientUtils();
+        this.appPane = appPane;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
-        loadElements();
     }
 
-    private void loadElements() {
-
-    }
 
     public void changeLanguage(String languageCode) {
         Locale locale = Locale.forLanguageTag(languageCode);
         resources = ResourceBundle.getBundle("bundles.LangBundle", locale);
-        loadElements();
     }
 
     @Override
     public void switchLanguage() {
-
+        appPane.setResources( ResourceBundle.getBundle(ClientUtils.resourceBundlePath, Locale.getDefault()));
+        appPane.loadMain();
     }
     @FXML
     private void infoButton(){
@@ -150,7 +147,9 @@ public class MainController implements Initializable, LangSwitcher {
     }
     public void displayAddRequest(Object response){
         output.setText((String) response);
-    }@FXML
+    }
+
+    @FXML
     private void scriptButton(){
         if(validStringInput(arg)){
             if(clientUtils.userManager().scriptModeOn(arg.getText())){

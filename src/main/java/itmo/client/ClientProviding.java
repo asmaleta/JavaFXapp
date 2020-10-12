@@ -97,7 +97,6 @@ public class ClientProviding {
                         key.interestOps(SelectionKey.OP_WRITE);
                     } else if (key.isReadable()) {
                         ans = dataExchangeClient.packageGet();
-                        userManager.writeAnsFromServer(ans);
                         connect = false;
                         break;
                     } else if (key.isWritable()) {

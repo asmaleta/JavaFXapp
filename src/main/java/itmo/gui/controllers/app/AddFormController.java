@@ -25,10 +25,10 @@ public class AddFormController implements Initializable {
     private JFXTextField name;
 
     @FXML
-    private JFXTextField coordidinateX;
+    private JFXTextField coordinateX;
 
     @FXML
-    private JFXTextField coordidinateY;
+    private JFXTextField coordinateY;
 
     @FXML
     private JFXTextField locationToName;
@@ -78,13 +78,13 @@ public class AddFormController implements Initializable {
 
     @FXML
     private void sendButton() {
-        if (validStringInput(name) & validLongInput(coordidinateX) & validIntInput(coordidinateY)
+        if (validStringInput(name) & validLongInput(coordinateX) & validIntInput(coordinateY)
                 & validStringInput(locationToName) & validLongInput(locationToX) & validLongInput(locationToY)
                 & validStringInput(locationFromName) & validLongInput(locationFromX) & validLongInput(locationFromY)
                 & validFloatInput(distance)) {
             Route route = new Route(name.getText(),
-                    new Coordinates(Long.parseLong(coordidinateX.getText()),
-                            Integer.parseInt(coordidinateY.getText())),
+                    new Coordinates(Long.parseLong(coordinateX.getText()),
+                            Integer.parseInt(coordinateY.getText())),
                     new Location(Long.parseLong(locationFromX.getText()),
                             Long.parseLong(locationFromY.getText()),locationFromName.getText()),
                     new Location(Long.parseLong(locationToX.getText()),
@@ -116,8 +116,8 @@ public class AddFormController implements Initializable {
     }
 
     private boolean validLongInput(JFXTextField field) {
-        if (clientUtils.userManager().checkStringRegex(field.getText(), "-?\\d{1,}")
-                && clientUtils.userManager().checkLongInput(field.getText())) {
+        if (clientUtils.userManager().checkLongInput(field.getText()) &&
+        clientUtils.userManager().checkStringRegex(field.getText(), "-?\\d{1,}")) {
             field.setUnFocusColor(Paint.valueOf("black"));
             field.setPromptText((resources.getString("addForm.textField." + field.getId())));
             return true;
@@ -130,8 +130,8 @@ public class AddFormController implements Initializable {
     }
 
     private boolean validFloatInput(JFXTextField field) {
-        if (clientUtils.userManager().checkStringRegex(field.getText(), "-?\\d{1,}[.]{1}\\d{1,}")
-                && clientUtils.userManager().checkFloatInput(field.getText())) {
+        if (clientUtils.userManager().checkFloatInput(field.getText()) &&
+                clientUtils.userManager().checkStringRegex(field.getText(), "-?\\d{1,}[.]{1}\\d{1,}")) {
             field.setUnFocusColor(Paint.valueOf("black"));
             field.setPromptText((resources.getString("addForm.textField." + field.getId())));
             return true;
@@ -143,8 +143,8 @@ public class AddFormController implements Initializable {
 
     }
     private boolean validIntInput(JFXTextField field) {
-        if (clientUtils.userManager().checkStringRegex(field.getText(), "-?\\d{1,}")
-                && clientUtils.userManager().checkIntInput(field.getText())) {
+        if (clientUtils.userManager().checkIntInput(field.getText()) &&
+        clientUtils.userManager().checkStringRegex(field.getText(), "-?\\d{1,}")) {
             field.setUnFocusColor(Paint.valueOf("black"));
             field.setPromptText((resources.getString("addForm.textField." + field.getId())));
             return true;

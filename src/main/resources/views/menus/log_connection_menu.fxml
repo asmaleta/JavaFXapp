@@ -11,7 +11,7 @@
 
 <VBox fx:id="loginMenuBarPane" maxHeight="326.0" maxWidth="439.0" minHeight="326.0" minWidth="439.0" prefHeight="326.0" prefWidth="439.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text fx:id="title" pickOnBounds="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Приветствую на допсе" textAlignment="CENTER" wrappingWidth="398.13672065734863">
+      <Text fx:id="title" pickOnBounds="true" strokeType="OUTSIDE" strokeWidth="0.0" text="%login.title" textAlignment="CENTER" wrappingWidth="398.13672065734863">
          <font>
             <Font size="24.0" />
          </font>
@@ -31,12 +31,12 @@
       </JFXPasswordField>
       <HBox prefHeight="41.0" prefWidth="399.0">
          <children>
-            <JFXButton fx:id="login" onAction="#validLoginTextField" prefHeight="70.0" prefWidth="150.0" style="-fx-border-color: gray;" text="Войти">
+            <JFXButton fx:id="login" onAction="#validLoginTextField" prefHeight="70.0" prefWidth="150.0" style="-fx-border-color: gray;" text="%login.button.input">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </JFXButton>
-            <JFXButton fx:id="register" alignment="CENTER" onAction="#validRegisterTextField" prefHeight="41.0" prefWidth="161.0" style="-fx-border-color: gray;" text="Зарегестрироваться" textAlignment="CENTER">
+            <JFXButton fx:id="register" alignment="CENTER" onAction="#validRegisterTextField" prefHeight="41.0" prefWidth="161.0" style="-fx-border-color: gray;" text="%login.button.reg" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="150.0" />
                </HBox.margin>

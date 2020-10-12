@@ -6,17 +6,17 @@
 
 <HBox fx:id="appPanel" maxHeight="46.0" maxWidth="384.0" minHeight="39.0" minWidth="360.0" prefHeight="46.0" prefWidth="384.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <JFXButton fx:id="main" alignment="CENTER" onAction="#loadMain" prefHeight="40.0" prefWidth="120.0" styleClass="app-panel-buttons" stylesheets="@../../styles.css" text="Главная" textAlignment="CENTER">
+      <JFXButton fx:id="main" alignment="CENTER" onAction="#loadMain" prefHeight="40.0" prefWidth="120.0" styleClass="app-panel-buttons" stylesheets="@../../styles.css" text="%appPanel.main" textAlignment="CENTER">
          <HBox.margin>
             <Insets />
          </HBox.margin>
       </JFXButton>
-      <JFXButton fx:id="listObj" alignment="CENTER" onAction="#loadListObj" prefHeight="40.0" prefWidth="120.0" styleClass="app-panel-buttons" stylesheets="@../../styles.css" text="Список объектов" textAlignment="CENTER">
+      <JFXButton fx:id="listObj" alignment="CENTER" onAction="#loadListObj" prefHeight="40.0" prefWidth="120.0" styleClass="app-panel-buttons" stylesheets="@../../styles.css" text="%appPanel.listobj" textAlignment="CENTER">
          <HBox.margin>
             <Insets />
          </HBox.margin>
       </JFXButton>
-      <JFXButton fx:id="visualization" alignment="CENTER" onAction="#loadVisualization" prefHeight="40.0" prefWidth="120.0" styleClass="app-panel-buttons" stylesheets="@../../styles.css" text="Визуализациия" textAlignment="CENTER">
+      <JFXButton fx:id="visualization" alignment="CENTER" onAction="#loadVisualization" prefHeight="40.0" prefWidth="120.0" styleClass="app-panel-buttons" stylesheets="@../../styles.css" text="%appPanel.visualization" textAlignment="CENTER">
          <HBox.margin>
             <Insets />
          </HBox.margin>

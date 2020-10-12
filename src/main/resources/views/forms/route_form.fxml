@@ -12,7 +12,7 @@
    <children>
       <VBox prefHeight="630.0" prefWidth="459.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="addFormLabel" alignment="CENTER" maxHeight="21.0" maxWidth="400.0" minHeight="21.0" minWidth="400.0" prefHeight="21.0" prefWidth="400.0" text="Форма для создания маршрута :" textAlignment="CENTER" wrapText="true">
+            <Label fx:id="addFormLabel" alignment="CENTER" maxHeight="21.0" maxWidth="400.0" minHeight="21.0" minWidth="400.0" prefHeight="21.0" prefWidth="400.0" text="%addForm.label" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
@@ -28,7 +28,7 @@
                   <Insets bottom="5.0" left="30.0" right="30.0" top="10.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField id="coordidinateX" fx:id="coordidinateX" focusColor="#2b4590" labelFloat="true" maxHeight="30.0" maxWidth="400.0" minHeight="30.0" minWidth="400.0" prefHeight="30.0" prefWidth="400.0" promptText="%addForm.textField.coordidinateX" styleClass="add-form-text" stylesheets="@../../styles.css">
+            <JFXTextField id="coordinateX" fx:id="coordinateX" focusColor="#2b4590" labelFloat="true" maxHeight="30.0" maxWidth="400.0" minHeight="30.0" minWidth="400.0" prefHeight="30.0" prefWidth="400.0" promptText="%addForm.textField.coordinateX" styleClass="add-form-text" stylesheets="@../../styles.css">
                <font>
                   <Font size="16.0" />
                </font>
@@ -36,7 +36,7 @@
                   <Insets bottom="5.0" left="30.0" right="30.0" top="20.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField id="coordidinateY" fx:id="coordidinateY" focusColor="#2b4590" labelFloat="true" maxHeight="30.0" maxWidth="400.0" minHeight="30.0" minWidth="400.0" prefHeight="30.0" prefWidth="400.0" promptText="%addForm.textField.coordidinateY" styleClass="add-form-text" stylesheets="@../../styles.css">
+            <JFXTextField id="coordinateY" fx:id="coordinateY" focusColor="#2b4590" labelFloat="true" maxHeight="30.0" maxWidth="400.0" minHeight="30.0" minWidth="400.0" prefHeight="30.0" prefWidth="400.0" promptText="%addForm.textField.coordinateY" styleClass="add-form-text" stylesheets="@../../styles.css">
                <font>
                   <Font size="16.0" />
                </font>
@@ -100,7 +100,7 @@
                   <Insets bottom="5.0" left="30.0" right="30.0" top="20.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXButton fx:id="send" maxHeight="25.0" maxWidth="459.0" onAction="#sendButton" prefHeight="25.0" prefWidth="459.0" style="-fx-border-color: black;" text="Отправить">
+            <JFXButton fx:id="send" maxHeight="25.0" maxWidth="459.0" onAction="#sendButton" prefHeight="25.0" prefWidth="459.0" style="-fx-border-color: black;" text="%addForm.sendButton">
                <VBox.margin>
                   <Insets bottom="30.0" left="30.0" right="30.0" top="20.0" />
                </VBox.margin>
