@@ -1,33 +1,30 @@
 package itmo.gui.canvas;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
+import javafx.scene.shape.*;
 import javafx.util.Duration;
 import lab6common.generatedclasses.Route;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class ResizableMapCanvas extends AbsResizableCanvas {
 
     private static final int SCREEN_START_MARGIN_ERROR_X = 10;
     private static final int SCREEN_START_MARGIN_ERROR_Y = 40;
 
-    public ArrayList<Route> routeArrayList ;
+    public HashSet<Route> routeHashSet;
     private double scale = 0;
     private GraphicsContext gc;
     private double min;
     private Pane wrapperMapPane;
 
-    public ResizableMapCanvas(ArrayList<Route> routeArrayList, Pane wrapperMapPane) {
+    public ResizableMapCanvas(HashSet<Route> routeHashSet, Pane wrapperMapPane) {
         super();
-        this.routeArrayList = routeArrayList;
+        this.routeHashSet = routeHashSet;
         this.wrapperMapPane = wrapperMapPane;
     }
 
@@ -39,7 +36,7 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
         gc.setFill(Color.BLACK);
         gc.strokeLine(coordX-SCREEN_START_MARGIN_ERROR_X- min * 0.030, coordY-SCREEN_START_MARGIN_ERROR_Y, coordX-SCREEN_START_MARGIN_ERROR_X+ min * 0.030, coordY-SCREEN_START_MARGIN_ERROR_Y);
         gc.strokeLine(coordX-SCREEN_START_MARGIN_ERROR_X, coordY-SCREEN_START_MARGIN_ERROR_Y- min * 0.030, coordX-SCREEN_START_MARGIN_ERROR_X, coordY-SCREEN_START_MARGIN_ERROR_Y+ min * 0.030);
-        return routeArrayList.stream().filter(route ->
+        return routeHashSet.stream().filter(route ->
                 Math.abs(route.getCoordinates().getX() - finalCoordX) < scale * 0.030)
                 .filter(route ->
                         Math.abs(route.getCoordinates().getY() - finalCoordY) < scale * 0.030)
@@ -48,12 +45,12 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
 
     @Override
     public void setObj(Object obj) {
-        routeArrayList = (ArrayList<Route>) obj;
+        routeHashSet = (HashSet<Route>) obj;
     }
 
     @Override
     public Object getObj() {
-        return routeArrayList;
+        return routeHashSet;
     }
 
     @Override
@@ -66,10 +63,10 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
         gc.clearRect(0, 0, width, height);
 
         // scale the map
-        double maxx = routeArrayList.stream().mapToDouble(r-> r.getCoordinates().getX()).max().orElse(getWidth());
-        double minx = routeArrayList.stream().mapToDouble(r-> r.getCoordinates().getX()).min().orElse(getHeight());
-        double maxy = routeArrayList.stream().mapToDouble(r-> r.getCoordinates().getY()).max().orElse(0);
-        double miny = routeArrayList.stream().mapToDouble(r-> r.getCoordinates().getY()).min().orElse(0);
+        double maxx = routeHashSet.stream().mapToDouble(r-> r.getCoordinates().getX()).max().orElse(getWidth());
+        double minx = routeHashSet.stream().mapToDouble(r-> r.getCoordinates().getX()).min().orElse(getHeight());
+        double maxy = routeHashSet.stream().mapToDouble(r-> r.getCoordinates().getY()).max().orElse(0);
+        double miny = routeHashSet.stream().mapToDouble(r-> r.getCoordinates().getY()).min().orElse(0);
         scale = 2 * Math.max(maxx, Math.max(-Math.min(minx, miny), maxy));
 
         //draw background
@@ -86,7 +83,7 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
         gc.fillText(String.valueOf((int)(scale*2/2.2 / 4)), min * 3.0 / 4.0, min / 2 + 20);
 
         // Draw dragons
-        routeArrayList.forEach(this::drawRoutes);
+        routeHashSet.forEach(this::drawRoutes);
     }
 
     private void drawRoutes(Route route) {
@@ -118,7 +115,6 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
         gc.fillOval(40 * size + x, 40 * size + y, 50 * size, 50 * size);
         gc.setFill(Color.WHITE);
         gc.fillOval(50 * size + x, 50 * size + y, 30 * size, 30 * size);
-
     }
 
     @Override
@@ -128,15 +124,18 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
         double size = setSize(route);
         x = x - size*120/2D;
         y = y - size*120/2D;
-        Circle circle = new Circle(65 * size + x, 60 * size + y, 50 * size, Color.valueOf(route.getId().toString()));
-        Polygon polygon = new Polygon(15 * size + x,60 * size + y,
-                115 * size + x,60 * size + y,65 * size + x,150 * size + y);
-        Circle circlew = new Circle(65 * size + x, 60 * size + y, 30 * size, Color.valueOf("white"));
+
+        Circle circle = new Circle(64 * size + x, 66 * size + y, 25 * size,Color.valueOf(route.getId().toString()));
+        Polygon polygon = new Polygon(45 * size + x,60 * size + y,
+                85 * size + x,60 * size + y,65 * size + x,120 * size + y);
+        polygon.setFill(Color.valueOf(route.getId().toString()));
+        Circle circlew = new Circle(64 * size + x, 66 * size + y, 15 * size, Color.valueOf("white"));
+
         wrapperMapPane.getChildren().addAll(circle,polygon,circlew);
-        FadeTransition fadeOut = new FadeTransition();
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(2));
         fadeOut.setNode(circle);fadeOut.setNode(polygon);fadeOut.setNode(circlew);
-        fadeOut.setFromValue(1);
-        fadeOut.setToValue(0);
+        fadeOut.setFromValue(0);
+        fadeOut.setToValue(1);
         fadeOut.setCycleCount(1);
         fadeOut.play();
 
@@ -145,37 +144,55 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
             drawRoutes(route);
         });
     }
+
+
     @Override
-    public void animateMove(Route object, Route newRoute) {
+    public void animateUpdate(Route object, Route newRoute) {
         double x = ((object.getCoordinates().getX() + scale / 2.0) * (min / scale));
         double y = ((scale / 2.0 - object.getCoordinates().getY()) * (min / scale));
         double size = setSize(object);
         x = x - size*120/2D;
         y = y - size*120/2D;
-        double xNew = ((object.getCoordinates().getX() + scale / 2.0) * (min / scale));
-        double yNew = ((scale / 2.0 - object.getCoordinates().getY()) * (min / scale));
-        double sizeNew = setSize(object);
+        double xNew = ((newRoute.getCoordinates().getX() + scale / 2.0) * (min / scale));
+        double yNew = ((scale / 2.0 - newRoute.getCoordinates().getY()) * (min / scale));
+        double sizeNew = setSize(newRoute);
         xNew= xNew - sizeNew*120/2D;
         yNew = yNew - sizeNew*120/2D;
-        Circle circle = new Circle(65 * size + x, 60 * size + y, 50 * size, Color.valueOf(object.getId().toString()));
-        Polygon polygon = new Polygon(15 * size + x,60 * size + y,
-                115 * size + x,60 * size + y,65 * size + x,150 * size + y);
-        Circle circlew = new Circle(65 * size + x, 60 * size + y, 30 * size, Color.valueOf("white"));
 
-        KeyValue circleX = new KeyValue(circle.centerXProperty(),65 * sizeNew + xNew);
-        KeyValue circleY = new KeyValue(circle.centerYProperty(),60 * sizeNew + yNew);
-        KeyValue circlewX = new KeyValue(circlew.centerXProperty(),65 * sizeNew + xNew);
-        KeyValue circlewY = new KeyValue(circlew.centerYProperty(),60 * sizeNew + yNew);
 
-        KeyFrame keyFrameW = new KeyFrame(Duration.seconds(1),circlewX,circlewY);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1),circleX,circleY);
-        wrapperMapPane.getChildren().addAll(circle,polygon,circlew);
-        Timeline timeline = new Timeline();
-        timeline.getKeyFrames().addAll(keyFrame,keyFrameW);
+        Circle circle = new Circle(65 * size + x, 60 * size + y, 25 * size,Color.valueOf(object.getId().toString()));
+        Circle circlew = new Circle(65 * size + x, 60 * size + y, 15 * size, Color.valueOf("white"));
+        //////triangle
+        MoveTo corner1 = new MoveTo(45 * size + x,60 * size + y);
+        LineTo corner2 = new LineTo(85 * size + x,60 * size + y);
+        LineTo corner3 = new LineTo(65 * size + x,120 * size + y);
+        Path path = new Path(corner1, corner2, corner3, new ClosePath());
+        path.setFill(Color.valueOf(object.getId().toString()));
+
+        routeHashSet.remove(object);
+            draw();
+        wrapperMapPane.getChildren().addAll(path,circle,circlew);
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(2),
+                        new KeyValue(circle.radiusProperty(), 25 * sizeNew),
+                        new KeyValue(circle.centerXProperty(), 65 * sizeNew + xNew),
+                        new KeyValue(circle.centerYProperty(), 60 * sizeNew + yNew),
+                        new KeyValue(circlew.centerXProperty(), 65 * sizeNew + xNew),
+                        new KeyValue(circlew.centerYProperty(), 60 * sizeNew + yNew),
+                        new KeyValue(circlew.radiusProperty(), 15 * sizeNew),
+                        new KeyValue(corner1.xProperty(), 45 * sizeNew + xNew),
+                        new KeyValue(corner1.yProperty(), 60 * sizeNew + yNew),
+                        new KeyValue(corner2.xProperty(), 85 * sizeNew + xNew),
+                        new KeyValue(corner2.yProperty(), 60 * sizeNew + yNew),
+                        new KeyValue(corner3.xProperty(), 65 * sizeNew + xNew),
+                        new KeyValue(corner3.yProperty(), 120 * sizeNew + yNew)));
+        timeline.setCycleCount(1);
         timeline.play();
 
         timeline.setOnFinished(e -> {
-            wrapperMapPane.getChildren().removeAll(circle,polygon,circlew);
+            wrapperMapPane.getChildren().removeAll(circlew,path,circle);
+            routeHashSet.add(newRoute);
+            draw();
         });
     }
 
@@ -187,12 +204,13 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
         x = x - size*120/2D;
         y = y - size*120/2D;
 
-        Circle circle = new Circle(65 * size + x, 60 * size + y, 50 * size, Color.valueOf(object.getId().toString()));
-        Polygon polygon = new Polygon(15 * size + x,60 * size + y,
-                115 * size + x,60 * size + y,65 * size + x,150 * size + y);
-        Circle circlew = new Circle(65 * size + x, 60 * size + y, 30 * size, Color.valueOf("white"));
+        Circle circle = new Circle(65 * size + x, 66 * size + y, 25 * size,Color.valueOf(object.getId().toString()));
+        Polygon polygon = new Polygon(45 * size + x,60 * size + y,
+                85 * size + x,60 * size + y,65 * size + x,120 * size + y);
+        polygon.setFill(Color.valueOf(object.getId().toString()));
+        Circle circlew = new Circle(65 * size + x, 66 * size + y, 15 * size, Color.valueOf("white"));;
         wrapperMapPane.getChildren().addAll(circle,polygon,circlew);
-        FadeTransition fadeOut = new FadeTransition(Duration.seconds(4));
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(2));
         fadeOut.setNode(circle);fadeOut.setNode(polygon);fadeOut.setNode(circlew);
         fadeOut.setFromValue(1);
         fadeOut.setToValue(0);
@@ -204,8 +222,4 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
         });
     }
 
-    @Override
-    public void animateUpdate(Route object, Route newRoute) {
-
-    }
 }

@@ -127,9 +127,6 @@ public class RouteInfoController implements Initializable {
             Object response = clientUtils.clientProviding().dataExchangeWithServer("remove_by_id", selectedRoute.getId().toString(),null).getAns();
             if (response instanceof Integer){
                 LOGGER.log(Level.INFO, "Success delete "+ response);
-                if (appPane.getVisualizationController() != null){
-                    appPane.getVisualizationController().getRouteMapCanvas().animateRemove(selectedRoute);
-                }
             }else{
                 AlertMaker.showErrorMessage("Request ex", (String) response);
             }
@@ -158,21 +155,6 @@ public class RouteInfoController implements Initializable {
 
             if (response instanceof Integer){
                 LOGGER.log(Level.INFO, "Success update "+ response);
-
-                if (appPane.getVisualizationController() != null){
-                   /* try {
-                        appPane.getRefresherThread().wait(3000);
-                    } catch (InterruptedException e) {
-                        LOGGER.log(Level.INFO, "Thead refresh error");
-                    }*/
-                    appPane.getVisualizationController().needAddRoute();
-                    appPane.getVisualizationController().getRouteList().clear();
-                    appPane.getVisualizationController().getRouteList().addAll(appPane.getClientUtils().clientCollectionManager().getRouteList());
-                    appPane.getVisualizationController().getRouteMapCanvas().setObj(appPane.getClientUtils().clientCollectionManager().getRouteList());
-                    appPane.getVisualizationController().getRouteMapCanvas().animateMove(selectedRoute,route);
-
-                    //appPane.getRefresherThread().notify();
-                }
             }else{
                 AlertMaker.showErrorMessage("Request ex", (String) response);
             }

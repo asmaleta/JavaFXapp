@@ -42,7 +42,7 @@ public class ClientProviding {
 
 
 
-    public Package dataExchangeWithServer(String command, String arg, Route route) {
+    public synchronized Package dataExchangeWithServer(String command, String arg, Route route) {
         Package ans = new Package("No response was received");
         try {
             connect();

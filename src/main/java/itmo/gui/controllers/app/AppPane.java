@@ -161,12 +161,14 @@ public class AppPane implements Initializable{
         public void run() {
             while (true) {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
+
                     synchronized (this) {
                         if (tableRoutesController != null) {
                             tableRoutesController.updateTable();
                         }
                         if (visualizationController != null) {
+                            System.out.println(visualizationController.getSelectedRoute());
                             visualizationController.updateData();
                         }
                     }

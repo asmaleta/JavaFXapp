@@ -19,7 +19,6 @@ public abstract class AbsResizableCanvas extends Canvas {
     public abstract Object getObj();
 
     public abstract void animateEntry(Route object);
-    public abstract void animateMove(Route object,Route newRoute);
     public abstract void animateRemove(Route object);
     public abstract void animateUpdate(Route object, Route newRoute);
 

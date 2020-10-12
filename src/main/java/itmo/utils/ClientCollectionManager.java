@@ -5,6 +5,7 @@ import lab6common.generatedclasses.Route;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +24,9 @@ public class ClientCollectionManager {
     public synchronized List<Route> getRouteList() {
         return routeList;
     }
-
+    public synchronized HashSet<Route> getRouteHashSet() {
+        return new HashSet<>(routeList);
+    }
 
 
 
