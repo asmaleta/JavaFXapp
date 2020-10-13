@@ -28,6 +28,7 @@ public class VisualizationController implements Initializable, LangSwitcher {
     private AppPane appPane;
     private HashSet<Route> newRoutes;
     private HashSet<Route> updatesRoutes;
+    private HashSet<Route> updatedRoutes;
     private HashSet<Route> deleteRoutes;
     private HashSet <Route> routeHashSet;
     private volatile Route selectedRoute;
@@ -38,6 +39,7 @@ public class VisualizationController implements Initializable, LangSwitcher {
         routeHashSet = new HashSet<>();
         newRoutes = new HashSet<>();
         updatesRoutes = new HashSet<>();
+        updatedRoutes = new HashSet<>();
         deleteRoutes= new HashSet<>();
         clientUtils = appPanelController.getClientUtils();
     }
@@ -78,13 +80,18 @@ public class VisualizationController implements Initializable, LangSwitcher {
             routeMapCanvas.animateRemove(rem);
         }
         deleteRoutes.clear();
-        for (Route update: updatesRoutes){
-            routeMapCanvas.animateUpdate(selectedRoute,update);
-            selectedRoute.setCoordinates(update.getCoordinates());
-            selectedRoute.setDistance(update.getDistance());
-            appPane.getRouteInfoController().displayRoute(update);
+        for (Route updated: updatedRoutes) {
+            for (Route update : updatesRoutes) {
+                routeMapCanvas.animateUpdate(updated, update);
+                if (selectedRoute != null) {
+                    selectedRoute.setCoordinates(update.getCoordinates());
+                    selectedRoute.setDistance(update.getDistance());
+                }
+                appPane.getRouteInfoController().displayRoute(update);
+            }
         }
         updatesRoutes.clear();
+        updatedRoutes.clear();
     }
     void  refreshMap (){
         routeHashSet.clear();
@@ -100,9 +107,12 @@ public class VisualizationController implements Initializable, LangSwitcher {
         if (response instanceof List) {
             List<Route> routes = (List<Route>) response;
             if (!clientUtils.clientCollectionManager().equals(new ClientCollectionManager((routes)))) {
-
                 clientUtils.clientCollectionManager().getRouteList().clear();
                 clientUtils.clientCollectionManager().getRouteList().addAll((List<Route>) response);
+                System.out.println("resp");
+                System.out.println(response);
+                System.out.println("hash");
+                System.out.println(routeHashSet);
                 if (routes.size() != routeHashSet.size()) {
                     newRoutes.clear();
                     newRoutes.addAll(routes); /// new - old
@@ -118,7 +128,12 @@ public class VisualizationController implements Initializable, LangSwitcher {
                     updatesRoutes.clear();
                     updatesRoutes.addAll(routes);// old - new
                     updatesRoutes.removeAll(routeHashSet);
-                    System.out.println("update");
+                    updatedRoutes.clear();
+                    updatedRoutes.addAll(routeHashSet);
+                    updatedRoutes.removeAll(routes);
+                    System.out.println("updated");
+                    System.out.println(updatedRoutes);
+                    System.out.println("updated");
                     System.out.println(updatesRoutes);
                 }
                 routeHashSet.clear();

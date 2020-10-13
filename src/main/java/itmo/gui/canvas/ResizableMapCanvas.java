@@ -130,17 +130,30 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
                 85 * size + x,60 * size + y,65 * size + x,120 * size + y);
         polygon.setFill(Color.valueOf(route.getId().toString()));
         Circle circlew = new Circle(64 * size + x, 66 * size + y, 15 * size, Color.valueOf("white"));
+        routeHashSet.remove(route);
+        draw();
+        wrapperMapPane.getChildren().addAll(polygon,circle,circlew);
+        FadeTransition fadePolygon = new FadeTransition(Duration.seconds(1),polygon);
+        FadeTransition fadeCircle = new FadeTransition(Duration.seconds(1),circle);
+        FadeTransition fadeCircleW = new FadeTransition(Duration.seconds(1),circlew);
 
-        wrapperMapPane.getChildren().addAll(circle,polygon,circlew);
-        FadeTransition fadeOut = new FadeTransition(Duration.seconds(2));
-        fadeOut.setNode(circle);fadeOut.setNode(polygon);fadeOut.setNode(circlew);
-        fadeOut.setFromValue(0);
-        fadeOut.setToValue(1);
-        fadeOut.setCycleCount(1);
-        fadeOut.play();
+        fadePolygon.setFromValue(0);
+        fadeCircle.setFromValue(0);
+        fadeCircleW.setFromValue(0);
 
-        fadeOut.setOnFinished(e -> {
+        fadePolygon.setToValue(1);
+        fadeCircle.setToValue(1);
+        fadeCircleW.setToValue(1);
+
+        fadePolygon.setCycleCount(1);
+        fadeCircle.setCycleCount(1);
+        fadeCircleW.setCycleCount(1);
+        fadeCircle.play();
+        fadeCircleW.play();
+        fadePolygon.play();
+        fadePolygon.setOnFinished(e -> {
             wrapperMapPane.getChildren().removeAll(circle,polygon,circlew);
+            routeHashSet.add(route);
             drawRoutes(route);
         });
     }
@@ -209,15 +222,30 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
                 85 * size + x,60 * size + y,65 * size + x,120 * size + y);
         polygon.setFill(Color.valueOf(object.getId().toString()));
         Circle circlew = new Circle(65 * size + x, 66 * size + y, 15 * size, Color.valueOf("white"));;
-        wrapperMapPane.getChildren().addAll(circle,polygon,circlew);
-        FadeTransition fadeOut = new FadeTransition(Duration.seconds(2));
-        fadeOut.setNode(circle);fadeOut.setNode(polygon);fadeOut.setNode(circlew);
-        fadeOut.setFromValue(1);
-        fadeOut.setToValue(0);
-        fadeOut.setCycleCount(1);
-        fadeOut.play();
 
-        fadeOut.setOnFinished(e -> {
+        wrapperMapPane.getChildren().addAll(polygon,circle,circlew);
+        routeHashSet.remove(object);
+        draw();
+
+        FadeTransition fadePolygon = new FadeTransition(Duration.seconds(2),polygon);
+        FadeTransition fadeCircle = new FadeTransition(Duration.seconds(2),circle);
+        FadeTransition fadeCircleW = new FadeTransition(Duration.seconds(2),circlew);
+
+        fadePolygon.setFromValue(1);
+        fadeCircle.setFromValue(1);
+        fadeCircleW.setFromValue(1);
+
+        fadePolygon.setToValue(0);
+        fadeCircle.setToValue(0);
+        fadeCircleW.setToValue(0);
+
+        fadePolygon.setCycleCount(1);
+        fadeCircle.setCycleCount(1);
+        fadeCircleW.setCycleCount(1);
+        fadePolygon.play();
+        fadeCircle.play();
+        fadeCircleW.play();
+        fadePolygon.setOnFinished(e -> {
             wrapperMapPane.getChildren().removeAll(circle,polygon,circlew);
         });
     }

@@ -124,12 +124,14 @@ public class RouteInfoController implements Initializable {
     }
     @FXML
     private void buttonRemoveCommand() {
-            Object response = clientUtils.clientProviding().dataExchangeWithServer("remove_by_id", selectedRoute.getId().toString(),null).getAns();
-            if (response instanceof Integer){
-                LOGGER.log(Level.INFO, "Success delete "+ response);
-            }else{
+        if (chekSelectedRoute()) {
+            Object response = clientUtils.clientProviding().dataExchangeWithServer("remove_by_id", selectedRoute.getId().toString(), null).getAns();
+            if (response instanceof Integer) {
+                LOGGER.log(Level.INFO, "Success delete " + response);
+            } else {
                 AlertMaker.showErrorMessage("Request ex", (String) response);
             }
+        }
     }
     @FXML
     private void buttonClearCommand() {
@@ -141,7 +143,7 @@ public class RouteInfoController implements Initializable {
         if (validStringInput(name) & validLongInput(coordinateX) & validIntInput(coordinateY)
                 & validStringInput(locationToName) & validLongInput(locationToX) & validLongInput(locationToY)
                 & validStringInput(locationFromName) & validLongInput(locationFromX) & validLongInput(locationFromY)
-                & validFloatInput(distance)) {
+                & validFloatInput(distance) & chekSelectedRoute()) {
             Route route = new Route(name.getText(),
                     new Coordinates(Long.parseLong(coordinateX.getText()),
                             Integer.parseInt(coordinateY.getText())),
@@ -159,6 +161,10 @@ public class RouteInfoController implements Initializable {
                 AlertMaker.showErrorMessage("Request ex", (String) response);
             }
         }
+    }
+
+    private boolean chekSelectedRoute() {
+        return selectedRoute != null && clientUtils.clientCollectionManager().getRouteHashSet().contains(selectedRoute);
     }
 
 
