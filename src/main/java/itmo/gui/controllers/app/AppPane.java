@@ -69,7 +69,6 @@ public class AppPane implements Initializable{
             loadLangElements(mainController);
             appPanelController.getMain().setDisable(true);
         } catch (IOException e) {
-            e.printStackTrace();
             AlertMaker.showErrorMessage("Load fxml error", null);
         }
     }
@@ -90,7 +89,6 @@ public class AppPane implements Initializable{
             appPanelController.getListObj().setDisable(true);
             loadRouteInfoPanel();
         } catch (IOException e) {
-            e.printStackTrace();
             AlertMaker.showErrorMessage("Load fxml error", null);
         }
     }
@@ -110,7 +108,6 @@ public class AppPane implements Initializable{
             loadLangElements(visualizationController);
             loadRouteInfoPanel();
         } catch (IOException e) {
-            e.printStackTrace();
             AlertMaker.showErrorMessage("Load fxml error", null);
         }
         appPanelController.getVisualization().setDisable(true);
@@ -135,7 +132,6 @@ public class AppPane implements Initializable{
             StackPane.setAlignment(root, Pos.CENTER_RIGHT);
             appPane.getChildren().addAll(root);
         } catch (IOException e) {
-            e.printStackTrace();
             AlertMaker.showErrorMessage("Load fxml error", null);
         }
     }
@@ -151,7 +147,6 @@ public class AppPane implements Initializable{
             appPane.getChildren().setAll(root);
             this.appPanelController = appPanelController;
         } catch (IOException e) {
-            e.printStackTrace();
             AlertMaker.showErrorMessage("Load fxml error", null);
         }
     }
@@ -168,7 +163,6 @@ public class AppPane implements Initializable{
                             tableRoutesController.updateTable();
                         }
                         if (visualizationController != null) {
-                            System.out.println(visualizationController.getSelectedRoute());
                             visualizationController.updateData();
                         }
                     }

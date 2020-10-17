@@ -49,7 +49,6 @@ public class ServerMenuController implements Initializable {
                    serverConnectionController.loadLoginRegister(resources);
                 }
             } catch (RuntimeException e) {
-                e.printStackTrace();
                 AlertMaker.showErrorMessage("Connection error", "Incorrect address");
             }
         }

@@ -148,7 +148,7 @@ public class VisualizationController implements Initializable, LangSwitcher {
 
     @Override
     public void switchLanguage() {
-        appPane.setResources( ResourceBundle.getBundle(ClientUtils.resourceBundlePath, Locale.getDefault()));
+        appPane.setResources(ResourceBundle.getBundle(ClientUtils.resourceBundlePath, Locale.getDefault()));
         appPane.loadVisualization();
     }
 }

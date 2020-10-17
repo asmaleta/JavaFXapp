@@ -125,7 +125,6 @@ public class MainController implements Initializable, LangSwitcher {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
             AlertMaker.showErrorMessage("Load fxml error", null);
         }
     }
@@ -141,7 +140,6 @@ public class MainController implements Initializable, LangSwitcher {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
             AlertMaker.showErrorMessage("Load fxml error", null);
         }
     }

@@ -130,11 +130,10 @@ public class LoginRegisterController implements Initializable, LangSwitcher {
             loader.setResources(resources);
             Parent root = loader.load();
             Stage stage = new Stage();
-            stage.setTitle("Navigator");
+            stage.setTitle(username.getText());
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
             AlertMaker.showErrorMessage("Load fxml error", null);
         }
     }

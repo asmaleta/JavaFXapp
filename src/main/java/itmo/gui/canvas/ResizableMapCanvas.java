@@ -33,9 +33,6 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
         double min = Math.min(getWidth(), getHeight());
         double finalCoordX = (coordX-SCREEN_START_MARGIN_ERROR_X) * (scale / min) - scale / 2.0;
         double finalCoordY = scale / 2.0 - (coordY-SCREEN_START_MARGIN_ERROR_Y) * (scale / min);
-        gc.setFill(Color.BLACK);
-        gc.strokeLine(coordX-SCREEN_START_MARGIN_ERROR_X- min * 0.030, coordY-SCREEN_START_MARGIN_ERROR_Y, coordX-SCREEN_START_MARGIN_ERROR_X+ min * 0.030, coordY-SCREEN_START_MARGIN_ERROR_Y);
-        gc.strokeLine(coordX-SCREEN_START_MARGIN_ERROR_X, coordY-SCREEN_START_MARGIN_ERROR_Y- min * 0.030, coordX-SCREEN_START_MARGIN_ERROR_X, coordY-SCREEN_START_MARGIN_ERROR_Y+ min * 0.030);
         return routeHashSet.stream().filter(route ->
                 Math.abs(route.getCoordinates().getX() - finalCoordX) < scale * 0.030)
                 .filter(route ->
@@ -148,10 +145,10 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
         fadePolygon.setCycleCount(1);
         fadeCircle.setCycleCount(1);
         fadeCircleW.setCycleCount(1);
+        fadePolygon.play();
         fadeCircle.play();
         fadeCircleW.play();
-        fadePolygon.play();
-        fadePolygon.setOnFinished(e -> {
+        fadeCircleW.setOnFinished(e -> {
             wrapperMapPane.getChildren().removeAll(circle,polygon,circlew);
             routeHashSet.add(route);
             drawRoutes(route);
@@ -245,7 +242,7 @@ public class ResizableMapCanvas extends AbsResizableCanvas {
         fadePolygon.play();
         fadeCircle.play();
         fadeCircleW.play();
-        fadePolygon.setOnFinished(e -> {
+        fadeCircleW.setOnFinished(e -> {
             wrapperMapPane.getChildren().removeAll(circle,polygon,circlew);
         });
     }
